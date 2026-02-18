@@ -1,4 +1,4 @@
-package com.mercury1089.scoutingapp2025.utils;
+package com.mercury1089.Scouting_App_2026.utils;
 
 import java.util.HashMap;
 

@@ -1,4 +1,4 @@
-package com.mercury1089.scoutingapp2025;
+package com.mercury1089.Scouting_App_2026;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;

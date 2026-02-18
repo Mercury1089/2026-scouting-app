@@ -1,11 +1,9 @@
-package com.mercury1089.scoutingapp2025.qr;
+package com.mercury1089.Scouting_App_2026.qr;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -13,13 +11,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.zxing.WriterException;
-import com.mercury1089.scoutingapp2025.HashMapManager;
-import com.mercury1089.scoutingapp2025.PregameActivity;
-import com.mercury1089.scoutingapp2025.R;
-import com.mercury1089.scoutingapp2025.SettingsActivity;
-import com.mercury1089.scoutingapp2025.utils.GenUtils;
-import com.mercury1089.scoutingapp2025.utils.QRStringBuilder;
+import com.mercury1089.Scouting_App_2026.HashMapManager;
+import com.mercury1089.Scouting_App_2026.PregameActivity;
+import com.mercury1089.Scouting_App_2026.R;
+import com.mercury1089.Scouting_App_2026.utils.GenUtils;
+import com.mercury1089.Scouting_App_2026.utils.QRStringBuilder;
 
 import java.util.LinkedHashMap;
 

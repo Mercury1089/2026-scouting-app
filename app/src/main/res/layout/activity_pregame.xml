@@ -12,18 +12,50 @@
     android:padding="@dimen/padding"
     tools:context=".PregameActivity">
 
+    <!--The clear and setting buttons-->
+    <ImageButton
+        android:id="@+id/SettingsButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/button_states"
+        android:src="@drawable/settings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
-    <Switch
-        android:id="@+id/PreloadedCargoSwitch"
+    <Button
+        android:id="@+id/ClearButton"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/button_states"
+        android:drawableStart="@drawable/clear_states"
+        android:drawablePadding="@dimen/bootstrap_alert_paddings"
+        android:enabled="false"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/Clear"
+        android:textColor="@drawable/text_states"
+        android:textSize="@dimen/button_text_size"
+        app:layout_constraintEnd_toStartOf="@+id/SettingsButton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed" />
+
+    <!--Setup directions-->
+
+    <TextView
+        android:id="@+id/IDSetup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:thumb="@drawable/thumb_states"
-        android:track="@drawable/track_states"
-        app:layout_constraintStart_toStartOf="@+id/IDToggleInstructions"
-        app:layout_constraintTop_toBottomOf="@+id/IDToggleInstructions" />
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/futura_medium_condensed_bt"
+        android:text="@string/SetupTitle"
+        android:textColor="@drawable/text_header_states"
+        android:textSize="@dimen/header_text_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/IDSetupDirections"
@@ -33,8 +65,23 @@
         android:text="@string/SetupDirections"
         android:textColor="@drawable/text_states"
         android:textSize="@dimen/instruction_text_size"
-        app:layout_constraintStart_toStartOf="@+id/IDSetup"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/IDSetup" />
+
+    <!--Scouter Name, Team alliance, alliance partners-->
+
+    <TextView
+        android:id="@+id/IDScouterName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/ScouterNameID"
+        android:textColor="@drawable/text_states"
+        android:textSize="@dimen/input_label_text_size"
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="@+id/IDSetupDirections"
+        app:layout_constraintTop_toBottomOf="@+id/IDSetupDirections" />
 
     <EditText
         android:id="@+id/ScouterNameInput"
@@ -53,31 +100,6 @@
         app:layout_constraintTop_toBottomOf="@+id/IDScouterName" />
 
     <TextView
-        android:id="@+id/IDScouterName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:fontFamily="@font/open_sans"
-        android:text="@string/ScouterNameID"
-        android:textColor="@drawable/text_states"
-        android:textSize="@dimen/input_label_text_size"
-        android:textStyle="normal"
-        app:layout_constraintStart_toStartOf="@+id/IDSetupDirections"
-        app:layout_constraintTop_toBottomOf="@+id/IDSetupDirections" />
-
-    <Switch
-        android:id="@+id/NoShowSwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp"
-        android:thumb="@drawable/thumb_states"
-        android:track="@drawable/track_states"
-        app:layout_constraintStart_toStartOf="@+id/PreloadedCargoSwitch"
-        app:layout_constraintTop_toBottomOf="@+id/PreloadedCargoSwitch" />
-
-    <TextView
         android:id="@+id/IDMatchNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -88,17 +110,6 @@
         android:textSize="@dimen/input_label_text_size"
         app:layout_constraintStart_toStartOf="@+id/ScouterNameInput"
         app:layout_constraintTop_toBottomOf="@+id/ScouterNameInput" />
-
-    <TextView
-        android:id="@+id/IDAlliancePartners"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="@string/AlliancePartnersID"
-        android:textColor="@drawable/text_states"
-        android:textSize="@dimen/input_label_text_size"
-        app:layout_constraintStart_toStartOf="@+id/IDTeamNumber"
-        app:layout_constraintTop_toBottomOf="@+id/TeamNumberInput" />
 
     <EditText
         android:id="@+id/MatchNumberInput"
@@ -130,24 +141,6 @@
         app:layout_constraintTop_toBottomOf="@+id/MatchNumberInput" />
 
     <EditText
-        android:id="@+id/FirstAlliancePartnerInput"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edittext_rounded_corners"
-        android:ems="10"
-        android:fontFamily="@font/open_sans"
-        android:hint="@string/HINT_TEAM_NUMBER"
-        android:importantForAutofill="no"
-        android:inputType="number"
-        android:maxLength="5"
-        android:nextFocusDown="@+id/SecondAlliancePartnerInput"
-        android:tag="Alliance1"
-        android:textColor="@color/charcoal"
-        app:layout_constraintStart_toStartOf="@+id/IDAlliancePartners"
-        app:layout_constraintTop_toBottomOf="@+id/IDAlliancePartners" />
-
-    <EditText
         android:id="@+id/TeamNumberInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -164,12 +157,44 @@
         app:layout_constraintStart_toStartOf="@+id/IDTeamNumber"
         app:layout_constraintTop_toBottomOf="@+id/IDTeamNumber" />
 
+    <!--Alliance Partners-->
+    <TextView
+        android:id="@+id/IDAlliancePartners"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="408dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/AlliancePartnersID"
+        android:textColor="@drawable/text_states"
+        android:textSize="@dimen/input_label_text_size"
+        app:layout_constraintStart_toStartOf="@+id/IDSetupDirections"
+        app:layout_constraintTop_toBottomOf="@+id/IDSetupDirections" />
+
+    <EditText
+        android:id="@+id/FirstAlliancePartnerInput"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/edittext_rounded_corners"
+        android:ems="10"
+        android:fontFamily="@font/open_sans"
+        android:hint="@string/HINT_TEAM_NUMBER"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:maxLength="5"
+        android:nextFocusDown="@+id/SecondAlliancePartnerInput"
+        android:tag="Alliance1"
+        android:textColor="@color/charcoal"
+        app:layout_constraintStart_toStartOf="@+id/IDAlliancePartners"
+        app:layout_constraintTop_toBottomOf="@+id/IDAlliancePartners" />
+
     <EditText
         android:id="@+id/SecondAlliancePartnerInput"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/edittext_rounded_corners"
         android:ems="10"
         android:fontFamily="@font/open_sans"
@@ -182,37 +207,13 @@
         app:layout_constraintStart_toEndOf="@+id/FirstAlliancePartnerInput"
         app:layout_constraintTop_toBottomOf="@+id/IDAlliancePartners" />
 
-    <TextView
-        android:id="@+id/IDNoShow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:fontFamily="@font/open_sans"
-        android:text="@string/NoShow"
-        android:textColor="@drawable/text_states"
-        android:textSize="@dimen/input_label_text_size"
-        app:layout_constraintBottom_toBottomOf="@+id/NoShowSwitch"
-        app:layout_constraintStart_toEndOf="@+id/NoShowSwitch"
-        app:layout_constraintTop_toTopOf="@+id/NoShowSwitch" />
-
-    <TextView
-        android:id="@+id/IDPreloadNote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:fontFamily="@font/open_sans"
-        android:text="@string/PreloadNote"
-        android:textColor="@drawable/text_states"
-        android:textSize="@dimen/input_label_text_size"
-        app:layout_constraintBottom_toBottomOf="@+id/PreloadedCargoSwitch"
-        app:layout_constraintStart_toEndOf="@+id/PreloadedCargoSwitch"
-        app:layout_constraintTop_toTopOf="@+id/PreloadedCargoSwitch" />
-
+    <!--Alliance Color Section-->
     <TextView
         android:id="@+id/IDAllianceColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
         android:fontFamily="@font/open_sans"
         android:text="@string/AllianceColorID"
         android:textColor="@drawable/text_states"
@@ -220,11 +221,13 @@
         app:layout_constraintStart_toStartOf="@+id/IDAlliancePartners"
         app:layout_constraintTop_toBottomOf="@+id/FirstAlliancePartnerInput" />
 
+    <!--Fix the layout of the boxed-->
     <RadioGroup
         android:id="@+id/MissedToggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
         android:divider="?android:attr/dividerHorizontal"
         android:orientation="horizontal"
         android:showDividers="middle"
@@ -257,17 +260,102 @@
     </RadioGroup>
 
     <TextView
-        android:id="@+id/IDSetup"
+        android:id="@+id/IDToggleInstructions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:fontFamily="@font/futura_medium_condensed_bt"
-        android:text="@string/SetupTitle"
-        android:textColor="@drawable/text_header_states"
-        android:textSize="@dimen/header_text_size"
-        app:layout_constraintStart_toStartOf="@+id/SettingsButton"
-        app:layout_constraintTop_toBottomOf="@+id/SettingsButton" />
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/open_sans_italic"
+        android:text="@string/ToggleInstructions"
+        android:textColor="@drawable/text_states"
+        android:textSize="@dimen/instruction_text_size"
+        app:layout_constraintStart_toStartOf="@+id/IDAllianceColor"
+        app:layout_constraintTop_toBottomOf="@+id/MissedToggle" />
 
+    <!--Prelead-->
+
+    <!-- Preloaded Cargo Counter Layout -->
+    <ImageButton
+        android:id="@+id/PreloadedCargoMinus"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_width="45dp"
+        android:layout_height="50dp"
+        android:background="@drawable/button_states"
+        android:scaleType="centerInside"
+        android:src="@drawable/minus_states"
+        app:layout_constraintStart_toStartOf="@+id/IDToggleInstructions"
+        app:layout_constraintTop_toBottomOf="@+id/IDToggleInstructions" />
+
+    <TextView
+        android:id="@+id/PreloadedCargoDisplay"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/edittext_rounded_corners"
+        android:fontFamily="@font/open_sans"
+        android:gravity="center"
+        android:text="000"
+        android:textColor="@color/charcoal"
+        android:textSize="@dimen/input_label_text_size"
+        app:layout_constraintStart_toEndOf="@+id/PreloadedCargoMinus"
+        app:layout_constraintTop_toBottomOf="@+id/IDToggleInstructions" />
+
+    <ImageButton
+        android:id="@+id/PreloadedCargoPlus"
+        android:layout_width="45dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_states"
+        android:scaleType="centerInside"
+        android:src="@drawable/plus_states"
+        app:layout_constraintStart_toEndOf="@+id/PreloadedCargoDisplay"
+        app:layout_constraintTop_toBottomOf="@+id/IDToggleInstructions" />
+
+    <TextView
+        android:id="@+id/IDPreloadNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="78dp"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/PreloadNote"
+        android:textColor="@drawable/text_states"
+        android:textSize="@dimen/input_label_text_size"
+        app:layout_constraintBottom_toBottomOf="@+id/PreloadedCargoDisplay"
+        app:layout_constraintStart_toEndOf="@+id/PreloadedCargoDisplay"
+        app:layout_constraintTop_toTopOf="@+id/PreloadedCargoDisplay"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <!--No Show Switch-->
+    <Switch
+        android:id="@+id/NoShowSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="16dp"
+        android:thumb="@drawable/thumb_states"
+        android:track="@drawable/track_states"
+        app:layout_constraintStart_toStartOf="@+id/PreloadedCargoMinus"
+        app:layout_constraintTop_toBottomOf="@+id/PreloadedCargoMinus" />
+
+    <TextView
+        android:id="@+id/IDNoShow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/NoShow"
+        android:textColor="@drawable/text_states"
+        android:textSize="@dimen/input_label_text_size"
+        app:layout_constraintBottom_toBottomOf="@+id/NoShowSwitch"
+        app:layout_constraintStart_toEndOf="@+id/NoShowSwitch"
+        app:layout_constraintTop_toTopOf="@+id/NoShowSwitch"
+        app:layout_constraintVertical_bias="0.5" />
+
+
+    <!--Start Button-->
     <TextView
         android:id="@+id/IDStartDirections"
         android:layout_width="wrap_content"
@@ -287,22 +375,6 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/ClearButton"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/button_height"
-        android:layout_marginStart="32dp"
-        android:background="@drawable/button_states"
-        android:drawableStart="@drawable/clear_states"
-        android:drawablePadding="@dimen/bootstrap_alert_paddings"
-        android:enabled="false"
-        android:fontFamily="@font/open_sans"
-        android:text="@string/Clear"
-        android:textColor="@drawable/text_states"
-        android:textSize="@dimen/button_text_size"
-        app:layout_constraintStart_toEndOf="@+id/SettingsButton"
-        app:layout_constraintTop_toTopOf="@+id/SettingsButton" />
-
-    <Button
         android:id="@+id/StartButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -319,33 +391,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageButton
-        android:id="@+id/SettingsButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@drawable/button_states"
-        android:src="@drawable/settings"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
-
-    <TextView
-        android:id="@+id/IDToggleInstructions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:fontFamily="@font/open_sans_italic"
-        android:text="@string/ToggleInstructions"
-        android:textColor="@drawable/text_states"
-        android:textSize="@dimen/instruction_text_size"
-        app:layout_constraintStart_toStartOf="@+id/IDAllianceColor"
-        app:layout_constraintTop_toBottomOf="@+id/MissedToggle" />
-
-    <!-- Left field side buttons -->
-
-
-    <!-- Right field side buttons -->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

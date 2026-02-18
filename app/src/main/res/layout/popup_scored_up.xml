@@ -169,8 +169,7 @@
                 android:enabled="true"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center"
-                android:src="@drawable/plus_states"
-                tools:ignore="ContentDescription" />
+                android:src="@drawable/plus_states" />
 
 
         </RadioGroup>

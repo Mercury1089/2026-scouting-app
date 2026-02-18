@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace 'com.mercury1089.scoutingapp2025'
+    namespace 'com.mercury1089.Scouting_App_2026'
     compileSdkVersion 35
     defaultConfig {
         applicationId "com.mercury1089.scoutingapp2025"
@@ -25,7 +25,7 @@ android {
     buildFeatures {
         viewBinding true
     }
-    namespace 'com.mercury1089.scoutingapp2025'
+    namespace 'com.mercury1089.Scouting_App_2026'
 }
 
 dependencies {

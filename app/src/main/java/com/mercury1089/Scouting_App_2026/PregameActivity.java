@@ -1,6 +1,6 @@
-package com.mercury1089.scoutingapp2025;
+package com.mercury1089.Scouting_App_2026;
 
-import com.mercury1089.scoutingapp2025.qr.QRRunnable;
+import com.mercury1089.Scouting_App_2026.qr.QRRunnable;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;

@@ -1,4 +1,4 @@
-package com.mercury1089.scoutingapp2025;
+package com.mercury1089.Scouting_App_2026;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -25,10 +25,10 @@ import android.widget.TextView;
 import java.util.LinkedHashMap;
 import androidx.fragment.app.Fragment;
 
-import com.mercury1089.scoutingapp2025.databinding.FragmentAutonBinding;
-import com.mercury1089.scoutingapp2025.listeners.NumericalDataInputListener;
-import com.mercury1089.scoutingapp2025.listeners.UpdateListener;
-import com.mercury1089.scoutingapp2025.utils.GenUtils;
+import com.mercury1089.Scouting_App_2026.databinding.FragmentAutonBinding;
+import com.mercury1089.Scouting_App_2026.listeners.NumericalDataInputListener;
+import com.mercury1089.Scouting_App_2026.listeners.UpdateListener;
+import com.mercury1089.Scouting_App_2026.utils.GenUtils;
 
 public class Auton extends Fragment implements UpdateListener {
     //HashMaps for sending QR data between screens

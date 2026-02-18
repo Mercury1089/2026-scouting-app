@@ -1,13 +1,10 @@
-package com.mercury1089.scoutingapp2025.listeners;
+package com.mercury1089.Scouting_App_2026.listeners;
 
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
-
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class NumericalDataInputListener implements View.OnClickListener {
     private final TextView counterView;

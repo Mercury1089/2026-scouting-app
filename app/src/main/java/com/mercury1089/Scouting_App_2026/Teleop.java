@@ -1,4 +1,4 @@
-package com.mercury1089.scoutingapp2025;
+package com.mercury1089.Scouting_App_2026;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -13,9 +13,9 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.mercury1089.scoutingapp2025.listeners.NumericalDataInputListener;
-import com.mercury1089.scoutingapp2025.listeners.UpdateListener;
-import com.mercury1089.scoutingapp2025.utils.GenUtils;
+import com.mercury1089.Scouting_App_2026.listeners.NumericalDataInputListener;
+import com.mercury1089.Scouting_App_2026.listeners.UpdateListener;
+import com.mercury1089.Scouting_App_2026.utils.GenUtils;
 
 import java.util.LinkedHashMap;
 

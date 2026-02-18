@@ -1,13 +1,9 @@
-package com.mercury1089.scoutingapp2025.utils;
+package com.mercury1089.Scouting_App_2026.utils;
 
 import android.content.Context;
-import android.graphics.Bitmap;
+
 import com.beardedhen.androidbootstrap.BootstrapButton;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-import com.mercury1089.scoutingapp2025.R;
+import com.mercury1089.Scouting_App_2026.R;
 import androidx.core.content.ContextCompat;
 
 public class GenUtils {

@@ -1,4 +1,4 @@
-package com.mercury1089.scoutingapp2025.utils;
+package com.mercury1089.Scouting_App_2026.utils;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -10,11 +10,11 @@ import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 
-import com.mercury1089.scoutingapp2025.R;
-import com.mercury1089.scoutingapp2025.SettingsActivity;
-import com.mercury1089.scoutingapp2025.qr.QRRunnable;
+import com.mercury1089.Scouting_App_2026.R;
+import com.mercury1089.Scouting_App_2026.SettingsActivity;
+import com.mercury1089.Scouting_App_2026.qr.QRRunnable;
 
-import static com.mercury1089.scoutingapp2025.utils.GenUtils.padLeftZeros;
+import static com.mercury1089.Scouting_App_2026.utils.GenUtils.padLeftZeros;
 
 public class ListAdapter extends BaseAdapter {
     SettingsActivity context;

@@ -1,4 +1,4 @@
-package com.mercury1089.scoutingapp2025;
+package com.mercury1089.Scouting_App_2026;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -13,7 +13,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import com.mercury1089.scoutingapp2025.utils.ListAdapter;
+import com.mercury1089.Scouting_App_2026.utils.ListAdapter;
 
 import java.util.LinkedHashMap;
 

@@ -1,7 +1,6 @@
-package com.mercury1089.scoutingapp2025.qr;
+package com.mercury1089.Scouting_App_2026.qr;
 
 
-import android.content.Context;
 import android.graphics.Bitmap;
 
 import com.google.zxing.EncodeHintType;

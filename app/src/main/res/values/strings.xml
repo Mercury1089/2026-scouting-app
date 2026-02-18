@@ -7,7 +7,7 @@
 
 <!-- Headings -->
     <!-- Titles -->
-        <string name="app_name">Scouting App 2025</string>
+        <string name="app_name">Scouting App 2026</string>
         <string name="SettingsTitle">SETTINGS</string>
         <string name="SetupTitle">PRE-MATCH SETUP</string>
         <string name="StartingPositionTitle">STARTING POSITION</string>
@@ -163,7 +163,7 @@
         <string name="Scanned">Scanned?</string>
         <string name="NextMatch">SET UP NEXT MATCH</string>
     <string name="ToggleInstructions">Tap on the toggle to record if the options are true (on) or false (off).</string>
-        <string name="PreloadNote">Preloaded Coral</string>
-        <string name="Coral">CORAL</string>
+        <string name="PreloadNote">Preloaded Fuel</string>
+        <string name="Fuel">FUEL</string>
         <string name="Amp">AMP</string>
 </resources>
