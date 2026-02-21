@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ScoredPopupWindow"
+    android:layout_width="@dimen/missed_popup_width"
+    android:layout_height="@dimen/missed_popup_height"
+    android:background="@android:color/transparent">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/Contents"
+        android:layout_width="@dimen/missed_popup_width"
+        android:layout_height="735dp"
+        android:background="@color/bg_scoring_popup"
+        android:padding="@dimen/padding"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/Header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/futura_medium_condensed_bt"
+            android:text="@string/Header"
+            android:textColor="@drawable/text_header_states"
+            android:textSize="@dimen/header_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--Collected Fuel-->
+        <TextView
+            android:id="@+id/CollectingTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="68dp"
+            android:text="@string/FuelCollected"
+            android:textColor="@color/bootstrap_brand_secondary_border"
+            android:textSize="@dimen/input_label_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Preloaded Cargo Counter Layout -->
+        <ImageButton
+            android:id="@+id/PreloadedCargoMinus"
+            android:layout_marginStart="250dp"
+            android:layout_marginTop="8dp"
+            android:layout_width="45dp"
+            android:layout_height="50dp"
+            android:background="@drawable/button_states"
+            android:scaleType="centerInside"
+            android:src="@drawable/minus_states"
+            app:layout_constraintStart_toStartOf="@+id/CollectingTitle"
+            app:layout_constraintTop_toBottomOf="@+id/Header" />
+
+        <TextView
+            android:id="@+id/PreloadedCargoDisplay"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edittext_rounded_corners"
+            android:fontFamily="@font/open_sans"
+            android:gravity="center"
+            android:text="000"
+            android:textColor="@color/charcoal"
+            android:textSize="@dimen/input_label_text_size"
+            app:layout_constraintStart_toEndOf="@+id/PreloadedCargoMinus"
+            app:layout_constraintTop_toBottomOf="@+id/Header" />
+
+        <ImageButton
+            android:id="@+id/PreloadedCargoPlus"
+            android:layout_width="45dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/button_states"
+            android:scaleType="centerInside"
+            android:src="@drawable/plus_states"
+            app:layout_constraintStart_toEndOf="@+id/PreloadedCargoDisplay"
+            app:layout_constraintTop_toBottomOf="@+id/Header" />
+
+        <!--
+        <RadioGroup
+            android:id="@+id/LowerIncrementDecrementContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:divider="?android:attr/dividerHorizontal"
+            android:orientation="horizontal"
+            android:showDividers="middle"
+            app:layout_constraintBottom_toBottomOf="@+id/CollectingTitle"
+            app:layout_constraintStart_toStartOf="@+id/CollectingTitle"
+            app:layout_constraintTop_toTopOf="@+id/CollectingTitle" />
+-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:fontFamily="@font/futura_medium_condensed_bt"
+            android:text="@string/Header"
+            android:textColor="@drawable/text_header_states"
+            android:textSize="@dimen/header_text_size"
+            app:layout_constraintStart_toStartOf="CollectingTitle"
+            app:layout_constraintTop_toTopOf="CollectingTitle" />
+
+
+<!--
+                <TextView
+                    android:id="@+id/FerryingTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="68dp"
+                    android:text="@string/FuelCollected"
+                    android:textColor="@color/bootstrap_brand_secondary_border"
+                    android:textSize="@dimen/input_label_text_size"
+                    app:layout_constraintStart_toStartOf="Ferrying"
+                    app:layout_constraintTop_toTopOf="Ferrying" />
+
+                <ImageButton
+                    android:id="@+id/FerryingCargoMinus"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="45dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/button_states"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/minus_states"
+                    app:layout_constraintStart_toStartOf="@+id/Ferrying"
+                    app:layout_constraintTop_toBottomOf="@+id/Ferrying" />
+
+                <TextView
+                    android:id="@+id/FerryingCargoDisplay"
+                    android:layout_width="60dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/edittext_rounded_corners"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center"
+                    android:text="000"
+                    android:textColor="@color/charcoal"
+                    android:textSize="@dimen/input_label_text_size"
+                    app:layout_constraintStart_toEndOf="@+id/Ferrying"
+                    app:layout_constraintTop_toBottomOf="@+id/Ferrying" />
+
+                <ImageButton
+                    android:id="@+id/FerryingCargoPlus"
+                    android:layout_width="45dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/button_states"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/plus_states"
+                    app:layout_constraintStart_toEndOf="@+id/Ferrying"
+                    app:layout_constraintTop_toBottomOf="@+id/Ferrying" />
+
+                <RadioGroup
+                    android:id="@+id/LowerIncrementDecrementContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:divider="?android:attr/dividerHorizontal"
+                    android:orientation="horizontal"
+                    android:showDividers="middle"
+                    app:layout_constraintBottom_toBottomOf="@+id/CollectingTitle"
+                    app:layout_constraintStart_toStartOf="@+id/CollectingTitle"
+                    app:layout_constraintTop_toTopOf="@+id/CollectingTitle">
+        -->
+
+        <!--
+                <Button
+                    android:id="@+id/DoneButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/button_large_active"
+                    android:text="@string/Done"
+                    android:textColor="@drawable/text_states"
+                    android:textSize="@dimen/button_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/LowerIncrementDecrementContainer" />
+
+                <Button
+                    android:id="@+id/CancelButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@android:color/transparent"
+                    android:text="@string/Cancel"
+                    android:textColor="@color/bootstrap_brand_secondary_border"
+                    android:textSize="@dimen/button_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/DoneButton" />
+        -->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/carat"
+        android:layout_width="@dimen/carat_width"
+        android:layout_height="@dimen/carat_height"
+        android:layout_marginStart="32dp"
+        android:background="@drawable/carat"
+        android:rotation="180"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

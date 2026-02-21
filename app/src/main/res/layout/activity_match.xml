@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabs"
         app:layout_constraintVertical_bias="1.0"
-        tools:layout="@layout/fragment_auton" />
+        tools:layout="@layout/auton_screen" />
 
     <fragment
         android:id="@+id/Teleop"
@@ -30,7 +30,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabs"
         app:layout_constraintVertical_bias="1.0"
-        tools:layout="@layout/fragment_teleop" />
+        tools:layout="@layout/teleop_screen" />
 
     <fragment
         android:id="@+id/Climb"
@@ -43,7 +43,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabs"
         app:layout_constraintVertical_bias="1.0"
-        tools:layout="@layout/fragment_climb" />
+        tools:layout="@layout/post_match" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/TitleBar"
