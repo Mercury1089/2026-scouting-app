@@ -85,6 +85,7 @@
         <string name="Header">Collecting</string>
         <string name="FuelCollected">How much FUEL was collected</string>
         <string name="Ferrying">Ferrying</string>
+        <string name="FuelPassed">How much FUEL was passed to their alliance zone or partner(s)</string>
 
 
         <string name="Algae">ALGAE</string>
