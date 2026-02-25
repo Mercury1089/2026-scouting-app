@@ -3,16 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ScoredPopupWindow"
-    android:layout_width="@dimen/field_popup_width"
+    android:layout_width="@dimen/field_tower_popup_width"
     android:layout_height="wrap_content"
     android:background="@android:color/transparent">
 
+    <!-- CARET POINTER -->
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/Contents"
-        android:layout_width="@dimen/field_popup_width"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/bg_scoring_popup"
         android:padding="@dimen/padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -298,8 +302,8 @@
             android:text="@string/ScoringTitle"
             android:textColor="@drawable/text_header_states"
             android:textSize="@dimen/header_text_size"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/StartTitle" />
+            app:layout_constraintBottom_toTopOf="@+id/StartTitle"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/StartTitle"
@@ -670,6 +674,196 @@
             app:layout_constraintVertical_bias="0.5" />
 
         <!-- ═════════════════════════════════════════
+             CLIMBING SECTION
+             ═════════════════════════════════════════ -->
+
+        <TextView
+            android:id="@+id/ClimbingTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="600dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/futura_medium_condensed_bt"
+            android:gravity="top"
+            android:text="@string/ClimbingTitle"
+            android:textColor="@drawable/text_header_states"
+            android:textSize="@dimen/header_text_size"
+            app:layout_constraintBottom_toTopOf="@+id/StartLevelToggle"
+            app:layout_constraintStart_toStartOf="@+id/ScoringTitle"
+            app:layout_constraintTop_toBottomOf="@+id/StartTitle" />
+
+        <TextView
+            android:id="@+id/ClimbingDesc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/AttemptedCLimbLevelDesc"
+            android:textColor="@color/bootstrap_brand_secondary_border"
+            android:textSize="@dimen/instruction_text_size"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/ClimbingTitle"
+            app:layout_constraintTop_toBottomOf="@+id/ClimbingTitle" />
+
+        <!-- Did Not Attempt or Level 1 -->
+        <RadioGroup
+            android:id="@+id/AttemptedClimbToggle"
+            android:layout_width="348dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@+id/ClimbingDesc"
+            app:layout_constraintTop_toBottomOf="@+id/ClimbingDesc">
+
+            <RadioButton
+                android:id="@+id/DidNotAttempt"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_left_states"
+                android:button="@null"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center"
+                android:text="@string/DNA"
+                android:textColor="@drawable/text_states"
+                android:textSize="@dimen/button_text_size" />
+
+            <RadioButton
+                android:id="@+id/AchievedLevel1"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_right_states"
+                android:button="@null"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@drawable/text_states"
+                android:textSize="@dimen/button_text_size" />
+        </RadioGroup>
+
+
+        <!--Successful Climbed-->
+
+        <!-- None or Level 1 -->
+        <TextView
+            android:id="@+id/SuccessfullyClimbed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/SuccessfullyClimbed"
+            android:textColor="@color/bootstrap_brand_secondary_border"
+            android:textSize="@dimen/instruction_text_size"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/AttemptedClimbToggle"
+            app:layout_constraintTop_toBottomOf="@+id/AttemptedClimbToggle" />
+
+        <RadioGroup
+            android:id="@+id/SuccessfulClimbed"
+            android:layout_width="348dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@+id/SuccessfullyClimbed"
+            app:layout_constraintTop_toBottomOf="@+id/SuccessfullyClimbed">
+
+            <RadioButton
+                android:id="@+id/DidNotAttempt"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_left_states"
+                android:button="@null"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center"
+                android:text="@string/SuccessfulClimbedLevel"
+                android:textColor="@drawable/text_states"
+                android:textSize="@dimen/button_text_size" />
+
+            <RadioButton
+                android:id="@+id/AchievedLevel1"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_right_states"
+                android:button="@null"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@drawable/text_states"
+                android:textSize="@dimen/button_text_size" />
+        </RadioGroup>
+
+
+        <!--Tower Climb Level-->
+        <TextView
+            android:id="@+id/TowerClimbPlacement"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/TowerClimbPlacement"
+            android:textColor="@color/bootstrap_brand_secondary_border"
+            android:textSize="@dimen/instruction_text_size"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/SuccessfulClimbed"
+            app:layout_constraintTop_toBottomOf="@+id/SuccessfulClimbed" />
+
+        <!-- Left, Right, Center Climb Location -->
+        <RadioGroup
+            android:id="@+id/SuccessfullyClimbedLocation"
+            android:layout_width="348dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@+id/TowerClimbPlacement"
+            app:layout_constraintTop_toBottomOf="@+id/TowerClimbPlacement">
+
+            <RadioButton
+                android:id="@+id/Left"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_left_states"
+                android:button="@null"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center"
+                android:text="@string/Left"
+                android:textColor="@drawable/text_states"
+                android:textSize="@dimen/button_text_size" />
+
+            <RadioButton
+                android:id="@+id/Center"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_left_states"
+                android:button="@null"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center"
+                android:text="@string/Center"
+                android:textColor="@drawable/text_states"
+                android:textSize="@dimen/button_text_size" />
+
+            <RadioButton
+                android:id="@+id/Right"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_right_states"
+                android:button="@null"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center"
+                android:text="@string/Right"
+                android:textColor="@drawable/text_states"
+                android:textSize="@dimen/button_text_size" />
+        </RadioGroup>
+        <!-- ═════════════════════════════════════════
              BUTTONS
              ═════════════════════════════════════════ -->
         <Button
@@ -708,7 +902,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- CARET POINTER -->
     <View
         android:id="@+id/carat"
         android:layout_width="@dimen/carat_width"

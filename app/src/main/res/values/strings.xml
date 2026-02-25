@@ -49,10 +49,9 @@
         <string name="Start">START</string>
         <string name="GenerateQRCode">GENERATE QR CODE</string>
 
-
+<!--Organize After-->
     <string name="CollectingDesc">How much fuel was collected</string>
     <string name="FerryingDesc">How much fuel was passed to their alliance zone or partner(s)</string>
-    <string name="ScoringTitle">SCORING</string>
     <string name="StartTitle">START</string>
     <string name="StartDesc">How full was the robot when it started scoring</string>
     <string name="StopTitle">STOP</string>
@@ -66,7 +65,33 @@
     <string name="percent_75">75%</string>
     <string name="RobotFellOver">Robot fell over</string>
     <string name="RobotFellOverDesc">Did the robot fall over during autonomous</string>
-    <string name="Save">SAVE</string>
+    <string name="Header">Collecting</string>
+    <string name="FuelCollected">How much FUEL was collected</string>
+    <string name="Ferrying">Ferrying</string>
+    <string name="FuelPassed">How much FUEL was passed to their alliance zone or partner(s)</string>
+
+    <string name="ClimbingTitle">CLIMBING</string>
+    <string name="AttemptedCLimbLevelDesc">What level did they attempt to climb to?</string>
+    <string name="DNA">DID NOT ATTEMPT</string>
+    <string name="SuccessfullyClimbed">What level did they successfully climb to?</string>
+    <string name="SuccessfulClimbedLevel">None</string>
+    <string name="TowerClimbPlacement">What level did they successfully climb to?</string>
+    <string name="Left">LEFT</string>
+    <string name="Center">CENTER</string>
+    <string name="Right">RIGHT</string>
+
+    <string name="Plus">+</string>
+    <string name="Minus">-</string>
+    <string name="ScoringDirections">Tap the + or - buttons to record scored/missed notes.</string>
+    <!--Check Scored and Missed to see if they are used anywhere-->
+    <string name="Scored">SCORED</string>
+    <string name="Missed">MISSED</string>
+    <string name="MiscDirections">Turn the toggle on if the action happens.</string>
+    <string name="Leave">Leave (Robot left the starting zone)</string>
+    <string name="FellOver">Fell Over</string>
+    <string name="TeleopWarning">Teleop is starting soon...</string>
+    <string name="TeleopError">Switch to teleop as soon as possible!</string>
+    <string name="TeleopNext">NEXT: TELEOP</string>
 
 <!-- SettingsActivity -->
     <!-- Warning -->
@@ -99,53 +124,13 @@
         <string name="AutonSeconds">AUTON SECONDS REMAINING</string>
         <string name="PossessionDirections">Tap the +/- buttons to increase or decrease the counter for each option.</string>
 
-    <!-- 2026-->
-        <string name="Header">Collecting</string>
-        <string name="FuelCollected">How much FUEL was collected</string>
-        <string name="Ferrying">Ferrying</string>
-        <string name="FuelPassed">How much FUEL was passed to their alliance zone or partner(s)</string>
-
-
-        <string name="Algae">ALGAE</string>
-        <string name="Dealgaefying">REEF DEALGAEFYING</string>
-        <string name="Processor">PROCESSOR</string>
-        <string name="Net">NET</string>
-        <string name="PickedUp">PICKED UP</string>
-        <string name="Dropped">DROPPED</string>
-        <string name="Plus">+</string>
-        <string name="Minus">-</string>
-        <string name="ScoringDirections">Tap the + or - buttons to record scored/missed notes.</string>
-        <string name="Scored">SCORED</string>
-        <string name="Missed">MISSED</string>=
-        <string name="Removed">REMOVED</string>
-        <string name="Attempted">ATTEMPTED</string>
-        <string name="L4">L4</string>
-        <string name="L3">L3</string>
-        <string name="L2">L2</string>
-        <string name="L1">L1</string>
-        <string name="MiscDirections">Turn the toggle on if the action happens.</string>
-        <string name="Leave">Leave (Robot left the starting zone)</string>
-        <string name="FellOver">Fell Over</string>
-        <string name="TeleopWarning">Teleop is starting soon...</string>
-        <string name="TeleopError">Switch to teleop as soon as possible!</string>
-        <string name="TeleopNext">NEXT: TELEOP</string>
 
     <!-- Teleop -->
         <string name="PlayedDefense">Played Defense</string>
         <string name="FellOverOrDied">Fell over/Died</string>
         <string name="ClimbNext">NEXT: POST-MATCH</string>
 
-    <!-- Stage -->
-        <string name="PostMatchDirections">Do not complete this screen until >5 seconds after the buzzer</string>
-        <string name="BargeZoneHeader">BARGE ZONE</string>
-        <string name="HangedDirections">What position is the cage in?</string>
-        <string name="Park">Park</string>
-        <string name="Hanged">Hang</string>
-        <string name="Deep">DEEP</string>
-        <string name="Shallow">SHALLOW</string>
-        <string name="RightStage">RIGHT</string>
-        <string name="TrapScoringHeader">TRAP SCORING</string>
-        <string name="TrapScoringDirections">Tap the + and - buttons to record scored/missed notes.</string>
+
 
 <!-- Display Popups -->
     <!-- Loading -->
