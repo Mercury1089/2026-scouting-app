@@ -50,6 +50,24 @@
         <string name="GenerateQRCode">GENERATE QR CODE</string>
 
 
+    <string name="CollectingDesc">How much fuel was collected</string>
+    <string name="FerryingDesc">How much fuel was passed to their alliance zone or partner(s)</string>
+    <string name="ScoringTitle">SCORING</string>
+    <string name="StartTitle">START</string>
+    <string name="StartDesc">How full was the robot when it started scoring</string>
+    <string name="StopTitle">STOP</string>
+    <string name="StopDesc">How full was the robot when it stopped scoring</string>
+    <string name="MissedTitle">MISSED</string>
+    <string name="MissedDesc">How much fuel was missed</string>
+    <string name="empty_label">EMPTY</string>
+    <string name="full_label">FULL</string>
+    <string name="percent_25">25%</string>
+    <string name="percent_50">50%</string>
+    <string name="percent_75">75%</string>
+    <string name="RobotFellOver">Robot fell over</string>
+    <string name="RobotFellOverDesc">Did the robot fall over during autonomous</string>
+    <string name="Save">SAVE</string>
+
 <!-- SettingsActivity -->
     <!-- Warning -->
         <string name="SettingsWarning">FOR STRATEGY COMMITTEE MEMBERS ONLY</string>
