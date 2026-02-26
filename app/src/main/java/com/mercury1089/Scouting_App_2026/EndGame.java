@@ -19,7 +19,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.tabs.TabLayout;
 import com.mercury1089.Scouting_App_2026.qr.QRRunnable;
 
-public class Climb extends Fragment {
+public class EndGame extends Fragment {
     //HashMaps for sending QR data between screens
     private LinkedHashMap<String, String> setupHashMap;
     private LinkedHashMap<String, String> climbHashMap;
@@ -52,8 +52,8 @@ public class Climb extends Fragment {
     private Dialog loading_alert;
     public final static int QRCodeSize = 500;
 
-    public static Climb newInstance() {
-        Climb fragment = new Climb();
+    public static EndGame newInstance() {
+        EndGame fragment = new EndGame();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;

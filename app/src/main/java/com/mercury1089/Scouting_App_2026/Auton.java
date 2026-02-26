@@ -24,8 +24,14 @@ import android.widget.Switch;
 import android.widget.TextView;
 import java.util.LinkedHashMap;
 import androidx.fragment.app.Fragment;
+import android.app.Dialog;
+import android.view.Window;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
+import androidx.gridlayout.widget.GridLayout;
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.mercury1089.Scouting_App_2026.databinding.FragmentAutonBinding;
 import com.mercury1089.Scouting_App_2026.listeners.NumericalDataInputListener;
 import com.mercury1089.Scouting_App_2026.listeners.UpdateListener;
 import com.mercury1089.Scouting_App_2026.utils.GenUtils;
@@ -35,69 +41,14 @@ public class Auton extends Fragment implements UpdateListener {
     private LinkedHashMap<String, String> setupHashMap;
     private LinkedHashMap<String, String> autonHashMap;
 
-    FragmentAutonBinding binding;
-
     // Instructions
     private TextView scoringDirectionsID;
 
-    // Coral Scoring - Reef
-    private TextView coralID;
-    private TextView reefID;
-    private TextView L4ReefID, L3ReefID, L2ReefID, L1ReefID;
-    private TextView scoredL4ID, missedL4ID;
-    private TextView scoredL3ID, missedL3ID;
-    private TextView scoredL2ID, missedL2ID;
-    private TextView scoredL1ID, missedL1ID;
-    private ImageButton scoredL4Button, notScoredL4Button;
-    private ImageButton missedL4Button, notMissedL4Button;
-    private ImageButton scoredL3Button, notScoredL3Button;
-    private ImageButton missedL3Button, notMissedL3Button;
-
-    private ImageButton scoredL2Button, notScoredL2Button;
-    private ImageButton missedL2Button, notMissedL2Button;
-
-    private ImageButton scoredL1Button, notScoredL1Button;
-    private ImageButton missedL1Button, notMissedL1Button;
-    private TextView scoredL4Counter, missedL4Counter;
-    private TextView scoredL3Counter, missedL3Counter;
-    private TextView scoredL2Counter, missedL2Counter;
-    private TextView scoredL1Counter, missedL1Counter;
-
-    // Algae Scoring - Reef Dealgaefying
-    private TextView algaeID;
-    private TextView dealgaefyingID;
-    private TextView L3AlgaeID, L2AlgaeID;
-    private TextView removedL3ID, attemptedL3ID;
-    private TextView removedL2ID, attemptedL2ID;
-    private ImageButton removedL3Button, notRemovedL3Button;
-    private ImageButton attemptedL3Button, notAttemptedL3Button;
-    private ImageButton removedL2Button, notRemovedL2Button;
-    private ImageButton attemptedL2Button, notAttemptedL2Button;
-    private TextView removedL3Counter, attemptedL3Counter;
-    private TextView removedL2Counter, attemptedL2Counter;
-
-    // Algae - Processor
-    private TextView processorID;
-    private TextView scoredProcessorID, missedProcessorID;
-    private ImageButton scoredProcessorButton, notScoredProcessorButton;
-    private ImageButton missedProcessorButton, notMissedProcessorButton;
-    private TextView scoredProcessorCounter, missedProcessorCounter;
-
-    // Algae - Net
-    private TextView netID;
-    private TextView scoredNetID, missedNetID;
-    private ImageButton scoredNetButton, notScoredNetButton;
-    private ImageButton missedNetButton, notMissedNetButton;
-    private TextView scoredNetCounter, missedNetCounter;
-
-    // Possession
-    private TextView possessionCoralID, possessionAlgaeID;
-    private TextView pickedUpCoralID;
-    private ImageButton pickedUpCoralButton, notPickedUpCoralButton;
-    private TextView pickedUpCoralCounter;
-    private TextView pickedUpAlgaeID;
-    private ImageButton pickedUpAlgaeButton, notPickedUpAlgaeButton;
-    private TextView pickedUpAlgaeCounter;
+    // Grid layouts for field zones - KEEP THIS
+    private GridLayout redAllianceGrid;
+    private GridLayout blueAllianceGrid;
+    private Dialog popupDialog;
+    private String currentSelectedZone = null;
 
     // Robot toggle options
     private TextView miscInstructionsID;
@@ -150,8 +101,20 @@ public class Auton extends Fragment implements UpdateListener {
         return inflated;
     }
 
-    public void onStart(){
+    public void onStart() {
+        setupHashMap = HashMapManager.getSetupHashMap();
+        autonHashMap = HashMapManager.getAutonHashMap();
         super.onStart();
+
+        // Initialize grid layouts for field zones
+        redAllianceGrid = getView().findViewById(R.id.redAllianceGrid);
+        blueAllianceGrid = getView().findViewById(R.id.blueAllianceGrid);
+
+        // Link misc direction labels (if not already added)
+        miscInstructionsID = getView().findViewById(R.id.IDMiscDirections);
+        leaveID = getView().findViewById(R.id.IDLeave);
+        fellOverID = getView().findViewById(R.id.IDFellOver);
+
 
         //linking variables to XML elements on the screen
         timerID = getView().findViewById(R.id.IDAutonSeconds1);
@@ -159,117 +122,7 @@ public class Auton extends Fragment implements UpdateListener {
         teleopWarning = getView().findViewById(R.id.TeleopWarning);
 
             scoringDirectionsID = getView().findViewById(R.id.IDPossessionDirections);
-            coralID = getView().findViewById(R.id.IDCoral);
-            reefID = getView().findViewById(R.id.IDReef);
-            L4ReefID = getView().findViewById(R.id.IDL4Coral);
-            L3ReefID = getView().findViewById(R.id.IDL3Coral);
-            L2ReefID = getView().findViewById(R.id.IDL2Coral);
-            L1ReefID = getView().findViewById(R.id.IDL1Coral);
 
-            scoredL4ID = getView().findViewById(R.id.IDL4Scored);
-            scoredL3ID = getView().findViewById(R.id.IDL3Scored);
-            scoredL2ID = getView().findViewById(R.id.IDL2Scored);
-            scoredL1ID = getView().findViewById(R.id.IDL1Scored);
-
-            missedL4ID = getView().findViewById(R.id.IDL4Missed);
-            missedL3ID = getView().findViewById(R.id.IDL3Missed);
-            missedL2ID = getView().findViewById(R.id.IDL2Missed);
-            missedL1ID = getView().findViewById(R.id.IDL1Missed);
-
-            scoredL4Button = getView().findViewById(R.id.scoredL4Button);
-            notScoredL4Button = getView().findViewById(R.id.notScoredL4Button);
-            missedL4Button = getView().findViewById(R.id.missedL4Button);
-            notMissedL4Button = getView().findViewById(R.id.notMissedL4Button);
-
-            scoredL3Button = getView().findViewById(R.id.scoredL3Button);
-            notScoredL3Button = getView().findViewById(R.id.notScoredL3Button);
-            missedL3Button = getView().findViewById(R.id.missedL3Button);
-            notMissedL3Button = getView().findViewById(R.id.notMissedL3Button);
-
-            scoredL2Button = getView().findViewById(R.id.scoredL2Button);
-            notScoredL2Button = getView().findViewById(R.id.notScoredL2Button);
-            missedL2Button = getView().findViewById(R.id.missedL2Button);
-            notMissedL2Button = getView().findViewById(R.id.notMissedL2Button);
-
-            scoredL1Button = getView().findViewById(R.id.scoredL1Button);
-            notScoredL1Button = getView().findViewById(R.id.notScoredL1Button);
-            missedL1Button = getView().findViewById(R.id.missedL1Button);
-            notMissedL1Button = getView().findViewById(R.id.notMissedL1Button);
-
-            scoredL4Counter = getView().findViewById(R.id.L4ScoredCounter);
-            missedL4Counter = getView().findViewById(R.id.L4MissedCounter);
-            scoredL3Counter = getView().findViewById(R.id.L3ScoredCounter);
-            missedL3Counter = getView().findViewById(R.id.L3MissedCounter);
-            scoredL2Counter = getView().findViewById(R.id.L2ScoredCounter);
-            missedL2Counter = getView().findViewById(R.id.L2MissedCounter);
-            scoredL1Counter = getView().findViewById(R.id.L1ScoredCounter);
-            missedL1Counter = getView().findViewById(R.id.L1MissedCounter);
-
-            algaeID = getView().findViewById(R.id.IDAlgae);
-            dealgaefyingID = getView().findViewById(R.id.IDDealgaefying);
-            L3AlgaeID = getView().findViewById(R.id.IDL3Algae);
-            L2AlgaeID = getView().findViewById(R.id.IDL2Algae);
-
-            L3AlgaeID = getView().findViewById(R.id.IDL3Algae);
-            L2AlgaeID = getView().findViewById(R.id.IDL2Algae);
-
-            removedL3ID = getView().findViewById(R.id.IDL3Removed);
-            attemptedL3ID = getView().findViewById(R.id.IDL3Attempted);
-            removedL2ID = getView().findViewById(R.id.IDL2Removed);
-            attemptedL2ID = getView().findViewById(R.id.IDL2Attempted);
-
-            removedL3Button = getView().findViewById(R.id.removedL3Button);
-            notRemovedL3Button = getView().findViewById(R.id.notRemovedL3Button);
-            attemptedL3Button = getView().findViewById(R.id.attemptedL3Button);
-            notAttemptedL3Button = getView().findViewById(R.id.notAttemptedL3Button);
-
-            removedL2Button = getView().findViewById(R.id.removedL2Button);
-            notRemovedL2Button = getView().findViewById(R.id.notRemovedL2Button);
-            attemptedL2Button = getView().findViewById(R.id.attemptedL2Button);
-            notAttemptedL2Button = getView().findViewById(R.id.notAttemptedL2Button);
-
-            removedL3Counter = getView().findViewById(R.id.L3RemovedCounter);
-            attemptedL3Counter = getView().findViewById(R.id.L3AttemptedCounter);
-            removedL2Counter = getView().findViewById(R.id.L2RemovedCounter);
-            attemptedL2Counter = getView().findViewById(R.id.L2AttemptedCounter);
-
-            processorID = getView().findViewById(R.id.IDProcessor);
-            scoredProcessorID = getView().findViewById(R.id.IDProcessorScored);
-            missedProcessorID = getView().findViewById(R.id.IDProcessorMissed);
-            scoredProcessorButton = getView().findViewById(R.id.scoredProcessorButton);
-            notScoredProcessorButton = getView().findViewById(R.id.notScoredProcessorButton);
-            missedProcessorButton = getView().findViewById(R.id.missedProcessorButton);
-            notMissedProcessorButton = getView().findViewById(R.id.notMissedProcessorButton);
-            scoredProcessorCounter = getView().findViewById(R.id.ProcessorScoredCounter);
-            missedProcessorCounter = getView().findViewById(R.id.ProcessorMissedCounter);
-
-            netID = getView().findViewById(R.id.IDNet);
-            scoredNetID = getView().findViewById(R.id.IDNetScored);
-            missedNetID = getView().findViewById(R.id.IDNetMissed);
-            scoredNetButton = getView().findViewById(R.id.scoredNetButton);
-            notScoredNetButton = getView().findViewById(R.id.notScoredNetButton);
-            missedNetButton = getView().findViewById(R.id.missedNetButton);
-            notMissedNetButton = getView().findViewById(R.id.notMissedNetButton);
-            scoredNetCounter = getView().findViewById(R.id.netScoredCounter);
-            missedNetCounter = getView().findViewById(R.id.netMissedCounter);
-
-            possessionCoralID = getView().findViewById(R.id.IDCoralPossession);
-            pickedUpCoralID = getView().findViewById(R.id.IDCoralPossessed);
-            pickedUpCoralButton = getView().findViewById(R.id.possessedCoralButton);
-            notPickedUpCoralButton = getView().findViewById(R.id.notPossessedCoralButton);
-            pickedUpCoralCounter = getView().findViewById(R.id.coralPossessedCounter);
-
-            possessionAlgaeID = getView().findViewById(R.id.IDAlgaePossession);
-            pickedUpAlgaeID = getView().findViewById(R.id.IDAlgaePossessed);
-            pickedUpAlgaeButton = getView().findViewById(R.id.possessedAlgaeButton);
-            notPickedUpAlgaeButton = getView().findViewById(R.id.notPossessedAlgaeButton);
-            pickedUpAlgaeCounter = getView().findViewById(R.id.algaePossessedCounter);
-
-            miscInstructionsID = getView().findViewById(R.id.IDMiscDirections);
-            leaveID = getView().findViewById(R.id.IDLeave);
-            fellOverID = getView().findViewById(R.id.IDFellOver);
-            leaveSwitch = getView().findViewById(R.id.LeaveSwitch);
-            fellOverSwitch = getView().findViewById(R.id.FellOverSwitch);
 
         topEdgeBar = getView().findViewById(R.id.topEdgeBar);
         bottomEdgeBar = getView().findViewById(R.id.bottomEdgeBar);
@@ -287,9 +140,13 @@ public class Auton extends Fragment implements UpdateListener {
         //fill in counters with data
         updateXMLObjects();
 
+        // Setup grid zone click listeners
+        setupRedAllianceGridListeners();
+        setupBlueAllianceGridListeners();
+
         Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
 
-        timer = new CountDownTimer(15000, 1000) {
+        timer = new CountDownTimer(20000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 secondsRemaining.setText(GenUtils.padLeftZeros("" + millisUntilFinished / 1000, 2));
@@ -327,6 +184,259 @@ public class Auton extends Fragment implements UpdateListener {
                     animatorSet.playTogether(topEdgeLighter, bottomEdgeLighter, leftEdgeLighter, rightEdgeLighter);
                     animatorSet.start();
 
+                }
+
+                /**
+                 * Setup click listeners for all red alliance grid zones (6 columns x 5 rows)
+                 */
+                private void setupRedAllianceGridListeners() {
+                    if (redAllianceGrid == null) return;
+
+                    for (int row = 0; row < 5; row++) {
+                        for (int col = 0; col < 6; col++) {
+                            String zoneId = "red_" + row + "_" + col;
+                            ImageButton button = findGridButton(redAllianceGrid, zoneId);
+                            if (button != null) {
+                                button.setOnClickListener(v -> onGridZoneClicked(zoneId, "field"));
+                            }
+                        }
+                    }
+                }
+
+/**
+ * Setup click listeners for all blue alliance grid zones (6 columns x 5 rows)
+ */
+                private void setupBlueAllianceGridListeners() {
+                    if (blueAllianceGrid == null) return;
+
+                    for (int row = 0; row < 5; row++) {
+                        for (int col = 0; col < 6; col++) {
+                            String zoneId = "blue_" + row + "_" + col;
+                            ImageButton button = findGridButton(blueAllianceGrid, zoneId);
+                            if (button != null) {
+                                button.setOnClickListener(v -> onGridZoneClicked(zoneId, "field"));
+                            }
+                        }
+                    }
+                }
+
+/**
+ * Find an ImageButton in the grid by its tag
+ */
+                private ImageButton findGridButton(GridLayout grid, String tag) {
+                    for (int i = 0; i < grid.getChildCount(); i++) {
+                        View child = grid.getChildAt(i);
+                        if (child instanceof ImageButton && tag.equals(child.getTag())) {
+                            return (ImageButton) child;
+                        }
+                    }
+                    return null;
+                }
+
+/**
+ * Handle grid zone click - show field popup
+ */
+                private void onGridZoneClicked(String zoneId, String popupType) {
+                    currentSelectedZone = zoneId;
+                    if ("field".equals(popupType)) {
+                        showFieldPopup(zoneId);
+                    }
+                }
+
+/**
+ * Show the field popup for a specific grid zone
+ */
+                private void showFieldPopup(String zoneId) {
+                    popupDialog = new Dialog(context);
+                    popupDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    popupDialog.setContentView(R.layout.popup_auton_field_screen);
+
+                    // Get UI elements from popup
+                    RadioGroup collectingToggle = popupDialog.findViewById(R.id.CollectingCounterToggle);
+                    RadioGroup ferryingToggle = popupDialog.findViewById(R.id.FerryingCounterToggle);
+                    RadioGroup startLevelToggle = popupDialog.findViewById(R.id.StartLevelToggle);
+                    RadioGroup stopLevelToggle = popupDialog.findViewById(R.id.StopLevelToggle);
+                    RadioGroup missedToggle = popupDialog.findViewById(R.id.MissedCounterToggle);
+                    Switch robotFellOverSwitch = popupDialog.findViewById(R.id.NoShowSwitch);
+
+                    Button saveButton = popupDialog.findViewById(R.id.SaveButton);
+                    Button cancelButton = popupDialog.findViewById(R.id.CancelButton);
+
+                    // Load existing data for this zone
+                    loadFieldPopupData(zoneId, collectingToggle, ferryingToggle, startLevelToggle, stopLevelToggle, missedToggle, robotFellOverSwitch);
+
+                    //ADD: Add listeners to all radio groups to update button states when selections change
+                    RadioGroup.OnCheckedChangeListener stateUpdateListener = (group, checkedId) ->
+                            updatePopupButtonStates(collectingToggle, ferryingToggle, startLevelToggle, stopLevelToggle, missedToggle);
+
+                    startLevelToggle.setOnCheckedChangeListener(stateUpdateListener);
+                    stopLevelToggle.setOnCheckedChangeListener(stateUpdateListener);
+                    missedToggle.setOnCheckedChangeListener(stateUpdateListener);
+
+//ADD: Update button states on popup open
+                    updatePopupButtonStates(collectingToggle, ferryingToggle, startLevelToggle, stopLevelToggle, missedToggle);
+
+                    // Save button listener
+                    saveButton.setOnClickListener(v -> {
+                        saveFieldPopupData(zoneId, collectingToggle, ferryingToggle, startLevelToggle, stopLevelToggle, missedToggle, robotFellOverSwitch);
+                        popupDialog.dismiss();
+                        updateGridVisuals();
+                    });
+
+                    // Cancel button listener
+                    cancelButton.setOnClickListener(v -> popupDialog.dismiss());
+
+                    popupDialog.show();
+                }
+
+/**
+ * Load field popup data from HashMap for the given zone
+ */
+                private void loadFieldPopupData(String zoneId, RadioGroup collectingToggle, RadioGroup ferryingToggle,
+                        RadioGroup startLevelToggle, RadioGroup stopLevelToggle,
+                        RadioGroup missedToggle, Switch robotFellOverSwitch) {
+                    String collectingValue = autonHashMap.getOrDefault(zoneId + "_Collecting", "000");
+                    String ferryingValue = autonHashMap.getOrDefault(zoneId + "_Ferrying", "000");
+                    String startLevelValue = autonHashMap.getOrDefault(zoneId + "_StartLevel", "Empty");
+                    String stopLevelValue = autonHashMap.getOrDefault(zoneId + "_StopLevel", "Empty");
+                    String missedValue = autonHashMap.getOrDefault(zoneId + "_Missed", "000");
+                    String robotFellValue = autonHashMap.getOrDefault(zoneId + "_RobotFellOver", "N");
+
+                    // Set radio button selections based on values
+                    setCounterValue(collectingToggle, collectingValue);
+                    setCounterValue(ferryingToggle, ferryingValue);
+                    setLevelValue(startLevelToggle, startLevelValue);
+                    setLevelValue(stopLevelToggle, stopLevelValue);
+                    setCounterValue(missedToggle, missedValue);
+                    robotFellOverSwitch.setChecked("Y".equals(robotFellValue));
+                }
+
+/**
+ * Save field popup data to HashMap for the given zone
+ */
+                private void saveFieldPopupData(String zoneId, RadioGroup collectingToggle, RadioGroup ferryingToggle,
+                        RadioGroup startLevelToggle, RadioGroup stopLevelToggle,
+                        RadioGroup missedToggle, Switch robotFellOverSwitch) {
+                    // Get selected values from radio groups
+                    String collectingValue = getCounterValue(collectingToggle);
+                    String ferryingValue = getCounterValue(ferryingToggle);
+                    String startLevelValue = getLevelValue(startLevelToggle);
+                    String stopLevelValue = getLevelValue(stopLevelToggle);
+                    String missedValue = getCounterValue(missedToggle);
+                    String robotFellValue = robotFellOverSwitch.isChecked() ? "Y" : "N";
+
+                    // Store in HashMap
+                    autonHashMap.put(zoneId + "_Collecting", collectingValue);
+                    autonHashMap.put(zoneId + "_Ferrying", ferryingValue);
+                    autonHashMap.put(zoneId + "_StartLevel", startLevelValue);
+                    autonHashMap.put(zoneId + "_StopLevel", stopLevelValue);
+                    autonHashMap.put(zoneId + "_Missed", missedValue);
+                    autonHashMap.put(zoneId + "_RobotFellOver", robotFellValue);
+
+                    Toast.makeText(context, "Data saved for " + zoneId, Toast.LENGTH_SHORT).show();
+                }
+
+/**
+ * Set counter value for Collecting, Ferrying, or Missed radio groups
+ * Stored values match button text: "-10", "-5", "-", "000", "+", "+5", "+10"
+ */
+                private void setCounterValue(RadioGroup group, String value) {
+                    for (int i = 0; i < group.getChildCount(); i++) {
+                        RadioButton button = (RadioButton) group.getChildAt(i);
+                        String buttonText = button.getText().toString().trim();
+                        // Match exact button text with the stored value
+                        if (buttonText.equals(value)) {
+                            group.check(button.getId());
+                            return;
+                        }
+                    }
+                    // Default to "000" (middle button at index 3) if no match found
+                    if (group.getChildCount() > 3) {
+                        group.check(((RadioButton) group.getChildAt(3)).getId());
+                    }
+                }
+
+/**
+ * Get counter value from Collecting, Ferrying, or Missed radio groups
+ * Returns the text of the selected radio button (e.g., "-10", "-", "000", "+5", "+10")
+ */
+                private String getCounterValue(RadioGroup group) {
+                    int selectedId = group.getCheckedRadioButtonId();
+                    if (selectedId == -1) {
+                        return "000"; // Default if none selected
+                    }
+                    RadioButton selectedButton = group.findViewById(selectedId);
+                    if (selectedButton != null) {
+                        return selectedButton.getText().toString().trim();
+                    }
+                    return "000";
+                }
+
+/**
+ * Set level value for Start Level or Stop Level radio groups
+ * Expected values: "Empty", "25", "50", "75", "Full" or similar button text
+ */
+                private void setLevelValue(RadioGroup group, String value) {
+                    for (int i = 0; i < group.getChildCount(); i++) {
+                        RadioButton button = (RadioButton) group.getChildAt(i);
+                        String buttonText = button.getText().toString().trim();
+
+                        // Match button text - handle both exact matches and partial matches
+                        if (buttonText.equalsIgnoreCase(value)) {
+                            group.check(button.getId());
+                            return;
+                        }
+
+                        // Handle numeric percentage matches (if stored as "25" but button shows "25%")
+                        if (value.equals("25") && buttonText.contains("25")) {
+                            group.check(button.getId());
+                            return;
+                        }
+                        if (value.equals("50") && buttonText.contains("50")) {
+                            group.check(button.getId());
+                            return;
+                        }
+                        if (value.equals("75") && buttonText.contains("75")) {
+                            group.check(button.getId());
+                            return;
+                        }
+                    }
+                    // Default to first button (Empty) if no match found
+                    if (group.getChildCount() > 0) {
+                        group.check(((RadioButton) group.getChildAt(0)).getId());
+                    }
+                }
+
+                /**
+                 * Get level value from Start Level or Stop Level radio groups
+                 * Returns the button text or a normalized value: "Empty", "25", "50", "75", "Full"
+                 */
+                private String getLevelValue(RadioGroup group) {
+                    int selectedId = group.getCheckedRadioButtonId();
+                    if (selectedId == -1) {
+                        return "Empty";
+                    }
+                    RadioButton selectedButton = group.findViewById(selectedId);
+                    if (selectedButton != null) {
+                        String text = selectedButton.getText().toString().trim();
+                        // Extract numeric values or return text as-is
+                        if (text.contains("25")) return "25";
+                        if (text.contains("50")) return "50";
+                        if (text.contains("75")) return "75";
+                        if (text.toLowerCase().contains("full")) return "Full";
+                        if (text.toLowerCase().contains("empty")) return "Empty";
+                        return text; // Return button text if no pattern match
+                    }
+                    return "Empty";
+                }
+
+                /**
+                 * Update grid visuals to show which zones have been filled
+                 * TODO: Enhance this to change button colors/styling based on whether data exists
+                 */
+                                private void updateGridVisuals() {
+                                    // Placeholder for visual feedback
+                                    // Could change button colors based on whether zones have data
                 }
             }
 
@@ -432,49 +542,6 @@ public class Auton extends Fragment implements UpdateListener {
         }
 
         //set listeners for buttons and fill the hashmap with data
-        pickedUpCoralButton.setOnClickListener(new NumericalDataInputListener(pickedUpCoralCounter, autonHashMap, "CoralPickedUp", true, this));
-        notPickedUpCoralButton.setOnClickListener(new NumericalDataInputListener(pickedUpCoralCounter, autonHashMap, "CoralPickedUp", false, this));
-        pickedUpAlgaeButton.setOnClickListener(new NumericalDataInputListener(pickedUpAlgaeCounter, autonHashMap, "AlgaePickedUp", true, this));
-        notPickedUpAlgaeButton.setOnClickListener(new NumericalDataInputListener(pickedUpAlgaeCounter, autonHashMap, "AlgaePickedUp", false, this));
-
-        scoredL4Button.setOnClickListener(new NumericalDataInputListener(scoredL4Counter, autonHashMap, "ScoredCoralL4", true, this));
-        notScoredL4Button.setOnClickListener(new NumericalDataInputListener(scoredL4Counter, autonHashMap, "ScoredCoralL4", false, this));
-        scoredL3Button.setOnClickListener(new NumericalDataInputListener(scoredL3Counter, autonHashMap, "ScoredCoralL3", true, this));
-        notScoredL3Button.setOnClickListener(new NumericalDataInputListener(scoredL3Counter, autonHashMap, "ScoredCoralL3", false, this));
-        scoredL2Button.setOnClickListener(new NumericalDataInputListener(scoredL2Counter, autonHashMap, "ScoredCoralL2", true, this));
-        notScoredL2Button.setOnClickListener(new NumericalDataInputListener(scoredL2Counter, autonHashMap, "ScoredCoralL2", false, this));
-        scoredL1Button.setOnClickListener(new NumericalDataInputListener(scoredL1Counter, autonHashMap, "ScoredCoralL1", true, this));
-        notScoredL1Button.setOnClickListener(new NumericalDataInputListener(scoredL1Counter, autonHashMap, "ScoredCoralL1", false, this));
-
-        missedL4Button.setOnClickListener(new NumericalDataInputListener(missedL4Counter, autonHashMap, "MissedCoralL4", true, this));
-        notMissedL4Button.setOnClickListener(new NumericalDataInputListener(missedL4Counter, autonHashMap, "MissedCoralL4", false, this));
-        missedL3Button.setOnClickListener(new NumericalDataInputListener(missedL3Counter, autonHashMap, "MissedCoralL3", true, this));
-        notMissedL3Button.setOnClickListener(new NumericalDataInputListener(missedL3Counter, autonHashMap, "MissedCoralL3", false, this));
-        missedL2Button.setOnClickListener(new NumericalDataInputListener(missedL2Counter, autonHashMap, "MissedCoralL2", true, this));
-        notMissedL2Button.setOnClickListener(new NumericalDataInputListener(missedL2Counter, autonHashMap, "MissedCoralL2", false, this));
-        missedL1Button.setOnClickListener(new NumericalDataInputListener(missedL1Counter, autonHashMap, "MissedCoralL1", true, this));
-        notMissedL1Button.setOnClickListener(new NumericalDataInputListener(missedL1Counter, autonHashMap, "MissedCoralL1", false, this));
-
-        removedL3Button.setOnClickListener(new NumericalDataInputListener(removedL3Counter, autonHashMap, "RemovedAlgaeL3", true, this));
-        notRemovedL3Button.setOnClickListener(new NumericalDataInputListener(removedL3Counter, autonHashMap, "RemovedAlgaeL3", false, this));
-        removedL2Button.setOnClickListener(new NumericalDataInputListener(removedL2Counter, autonHashMap, "RemovedAlgaeL2", true, this));
-        notRemovedL2Button.setOnClickListener(new NumericalDataInputListener(removedL2Counter, autonHashMap, "RemovedAlgaeL2", false, this));
-
-        attemptedL3Button.setOnClickListener(new NumericalDataInputListener(attemptedL3Counter, autonHashMap, "AttemptedAlgaeL3", true, this));
-        notAttemptedL3Button.setOnClickListener(new NumericalDataInputListener(attemptedL3Counter, autonHashMap, "AttemptedAlgaeL3", false, this));
-        attemptedL2Button.setOnClickListener(new NumericalDataInputListener(attemptedL2Counter, autonHashMap, "AttemptedAlgaeL2", true, this));
-        notAttemptedL2Button.setOnClickListener(new NumericalDataInputListener(attemptedL2Counter, autonHashMap, "AttemptedAlgaeL2", false, this));
-
-        scoredProcessorButton.setOnClickListener(new NumericalDataInputListener(scoredProcessorCounter, autonHashMap, "ScoredAlgaeProcessor", true, this));
-        notScoredProcessorButton.setOnClickListener(new NumericalDataInputListener(scoredProcessorCounter, autonHashMap, "ScoredAlgaeProcessor", false, this));
-        missedProcessorButton.setOnClickListener(new NumericalDataInputListener(missedProcessorCounter, autonHashMap, "MissedAlgaeProcessor", true, this));
-        notMissedProcessorButton.setOnClickListener(new NumericalDataInputListener(missedProcessorCounter, autonHashMap, "MissedAlgaeProcessor", false, this));
-
-        scoredNetButton.setOnClickListener(new NumericalDataInputListener(scoredNetCounter, autonHashMap, "ScoredAlgaeNet", true, this));
-        notScoredNetButton.setOnClickListener(new NumericalDataInputListener(scoredNetCounter, autonHashMap, "ScoredAlgaeNet", false, this));
-        missedNetButton.setOnClickListener(new NumericalDataInputListener(missedNetCounter, autonHashMap, "MissedAlgaeNet", true, this));
-        notMissedNetButton.setOnClickListener(new NumericalDataInputListener(missedNetCounter, autonHashMap, "MissedAlgaeNet", false, this));
-
 
         leaveSwitch.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -498,149 +565,51 @@ public class Auton extends Fragment implements UpdateListener {
         });
     }
 
-    private void possessionButtonsEnabledState(boolean enable){
-        possessionCoralID.setEnabled(enable);
-        pickedUpCoralID.setEnabled(enable);
-        pickedUpCoralButton.setEnabled(enable);
-        notPickedUpAlgaeButton.setEnabled(enable);
-        pickedUpCoralCounter.setEnabled(enable);
+    //ADD: New method - Update popup button states based on cascading logic
+    /**
+     * Update all button states in popup based on cascading sequential logic:
+     * - Level 1: Collecting & Ferrying always enabled
+     * - Level 2: START & STOP always enabled
+     * - Level 3: MISSED enabled only if both START and STOP are selected
+     * - Level 4: CLIMBING disabled if this is for scoring popup
+     */
+    private void updatePopupButtonStates(RadioGroup collectingToggle, RadioGroup ferryingToggle,
+                                         RadioGroup startLevelToggle, RadioGroup stopLevelToggle,
+                                         RadioGroup missedToggle) {
+        // Get current selections
+        String startLevel = getLevelValue(startLevelToggle);
+        String stopLevel = getLevelValue(stopLevelToggle);
 
-        possessionAlgaeID.setEnabled(enable);
-        pickedUpAlgaeID.setEnabled(enable);
-        pickedUpAlgaeButton.setEnabled(enable);
-        notPickedUpAlgaeButton.setEnabled(enable);
-        pickedUpAlgaeCounter.setEnabled(enable);
+        // Level 1: Collecting & Ferrying always enabled
+        setRadioGroupEnabled(collectingToggle, true);
+        setRadioGroupEnabled(ferryingToggle, true);
+
+        // Level 2: START & STOP always enabled (can select anytime)
+        setRadioGroupEnabled(startLevelToggle, true);
+        setRadioGroupEnabled(stopLevelToggle, true);
+
+        // Level 3: MISSED - enable only if BOTH START and STOP are selected
+        boolean bothScoringLevelsSelected = !startLevel.equals("Empty") && !stopLevel.equals("Empty");
+        setRadioGroupEnabled(missedToggle, bothScoringLevelsSelected);
     }
 
-    private void scoringButtonsEnabledState(boolean enable){
-        coralID.setEnabled(enable);
-        reefID.setEnabled(enable);
-        L4ReefID.setEnabled(enable);
-        L3ReefID.setEnabled(enable);
-        L2ReefID.setEnabled(enable);
-        L1ReefID.setEnabled(enable);
-
-        scoredL4ID.setEnabled(enable);
-        scoredL4Button.setEnabled(enable);
-        notScoredL4Button.setEnabled(enable);
-        scoredL4Counter.setEnabled(enable);
-
-        missedL4ID.setEnabled(enable);
-        missedL4Button.setEnabled(enable);
-        notMissedL4Button.setEnabled(enable);
-        missedL4Counter.setEnabled(enable);
-
-        scoredL3ID.setEnabled(enable);
-        scoredL3Button.setEnabled(enable);
-        notScoredL3Button.setEnabled(enable);
-        scoredL3Counter.setEnabled(enable);
-
-        missedL3ID.setEnabled(enable);
-        missedL3Button.setEnabled(enable);
-        notMissedL3Button.setEnabled(enable);
-        missedL3Counter.setEnabled(enable);
-
-        scoredL2ID.setEnabled(enable);
-        scoredL2Button.setEnabled(enable);
-        notScoredL2Button.setEnabled(enable);
-        scoredL2Counter.setEnabled(enable);
-
-        missedL2ID.setEnabled(enable);
-        missedL2Button.setEnabled(enable);
-        notMissedL2Button.setEnabled(enable);
-        missedL2Counter.setEnabled(enable);
-
-        scoredL1ID.setEnabled(enable);
-        scoredL1Button.setEnabled(enable);
-        notScoredL1Button.setEnabled(enable);
-        scoredL1Counter.setEnabled(enable);
-
-        missedL1ID.setEnabled(enable);
-        missedL1Button.setEnabled(enable);
-        notMissedL1Button.setEnabled(enable);
-        missedL1Counter.setEnabled(enable);
-
-        algaeID.setEnabled(enable);
-        dealgaefyingID.setEnabled(enable);
-        L3AlgaeID.setEnabled(enable);
-        L2AlgaeID.setEnabled(enable);
-
-        removedL3ID.setEnabled(enable);
-        removedL3Button.setEnabled(enable);
-        notRemovedL3Button.setEnabled(enable);
-        removedL3Counter.setEnabled(enable);
-
-        removedL2ID.setEnabled(enable);
-        removedL2Button.setEnabled(enable);
-        notRemovedL2Button.setEnabled(enable);
-        removedL2Counter.setEnabled(enable);
-
-        attemptedL3ID.setEnabled(enable);
-        attemptedL3Button.setEnabled(enable);
-        notAttemptedL3Button.setEnabled(enable);
-        attemptedL3Counter.setEnabled(enable);
-
-        attemptedL2ID.setEnabled(enable);
-        attemptedL2Button.setEnabled(enable);
-        notAttemptedL2Button.setEnabled(enable);
-        attemptedL2Counter.setEnabled(enable);
-
-        processorID.setEnabled(enable);
-        scoredProcessorID.setEnabled(enable);
-        scoredProcessorButton.setEnabled(enable);
-        notScoredProcessorButton.setEnabled(enable);
-        scoredProcessorCounter.setEnabled(enable);
-        missedProcessorID.setEnabled(enable);
-        missedProcessorButton.setEnabled(enable);
-        notMissedProcessorButton.setEnabled(enable);
-        missedProcessorCounter.setEnabled(enable);
-
-        netID.setEnabled(enable);
-        scoredNetID.setEnabled(enable);
-        scoredNetButton.setEnabled(enable);
-        notScoredNetButton.setEnabled(enable);
-        scoredNetCounter.setEnabled(enable);
-        missedNetID.setEnabled(enable);
-        missedNetButton.setEnabled(enable);
-        missedNetCounter.setEnabled(enable);
-}
+    //ADD: Helper method - Enable or disable all buttons in a RadioGroup
+    /**
+     * Enable or disable all radio buttons in a group
+     */
+    private void setRadioGroupEnabled(RadioGroup group, boolean enabled) {
+        for (int i = 0; i < group.getChildCount(); i++) {
+            group.getChildAt(i).setEnabled(enabled);
+        }
+    }
 
 private void miscButtonsEnabledState(boolean enable){
         miscInstructionsID.setEnabled(enable);
         leaveSwitch.setEnabled(enable);
         leaveID.setEnabled(enable);
         nextButton.setEnabled(enable);
-    }
-
-    private void allButtonsEnabledState(boolean enable){
-        possessionButtonsEnabledState(enable);
-        scoringButtonsEnabledState(enable);
-        miscButtonsEnabledState(enable);
-    }
 
     public void updateXMLObjects(){
-        scoredL4Counter.setText(GenUtils.padLeftZeros(autonHashMap.get("ScoredCoralL4"), 3));
-        scoredL3Counter.setText(GenUtils.padLeftZeros(autonHashMap.get("ScoredCoralL3"), 3));
-        scoredL2Counter.setText(GenUtils.padLeftZeros(autonHashMap.get("ScoredCoralL2"), 3));
-        scoredL1Counter.setText(GenUtils.padLeftZeros(autonHashMap.get("ScoredCoralL1"), 3));
-
-        missedL4Counter.setText(GenUtils.padLeftZeros(autonHashMap.get("MissedCoralL4"), 3));
-        missedL3Counter.setText(GenUtils.padLeftZeros(autonHashMap.get("MissedCoralL3"), 3));
-        missedL2Counter.setText(GenUtils.padLeftZeros(autonHashMap.get("MissedCoralL2"), 3));
-        missedL1Counter.setText(GenUtils.padLeftZeros(autonHashMap.get("MissedCoralL1"), 3));
-
-        removedL3Counter.setText(GenUtils.padLeftZeros(autonHashMap.get("RemovedAlgaeL3"), 3));
-        removedL2Counter.setText(GenUtils.padLeftZeros(autonHashMap.get("RemovedAlgaeL2"), 3));
-        attemptedL3Counter.setText(GenUtils.padLeftZeros(autonHashMap.get("AttemptedAlgaeL3"), 3));
-        attemptedL2Counter.setText(GenUtils.padLeftZeros(autonHashMap.get("AttemptedAlgaeL2"), 3));
-
-        scoredProcessorCounter.setText(GenUtils.padLeftZeros(autonHashMap.get("ScoredAlgaeProcessor"), 3));
-        missedProcessorCounter.setText(GenUtils.padLeftZeros(autonHashMap.get("MissedAlgaeProcessor"), 3));
-        scoredNetCounter.setText(GenUtils.padLeftZeros(autonHashMap.get("ScoredAlgaeNet"), 3));
-        missedNetCounter.setText(GenUtils.padLeftZeros(autonHashMap.get("MissedAlgaeNet"), 3));
-
-        pickedUpCoralCounter.setText(GenUtils.padLeftZeros(autonHashMap.get("CoralPickedUp"), 3));
-        pickedUpAlgaeCounter.setText(GenUtils.padLeftZeros(autonHashMap.get("AlgaePickedUp"), 3));
 
         leaveSwitch.setChecked(autonHashMap.get("Leave").equals("Y"));
 
@@ -655,31 +624,6 @@ private void miscButtonsEnabledState(boolean enable){
             nextButton.setText(R.string.TeleopNext);
             allButtonsEnabledState(true);
             // Disables decrement buttons if counter is at 0
-            // There's totally a better way to do this without the redundancy
-            notPickedUpCoralButton.setEnabled(Integer.parseInt(pickedUpCoralCounter.getText().toString()) > 0);
-            notPickedUpAlgaeButton.setEnabled(Integer.parseInt(pickedUpAlgaeCounter.getText().toString()) > 0);
-            notPickedUpCoralButton.setEnabled(Integer.parseInt(pickedUpCoralCounter.getText().toString()) > 0);
-            notPickedUpAlgaeButton.setEnabled(Integer.parseInt(pickedUpAlgaeCounter.getText().toString()) > 0);
-            notScoredL4Button.setEnabled(Integer.parseInt(scoredL4Counter.getText().toString()) > 0);
-            notScoredL3Button.setEnabled(Integer.parseInt(scoredL3Counter.getText().toString()) > 0);
-            notScoredL2Button.setEnabled(Integer.parseInt(scoredL2Counter.getText().toString()) > 0);
-            notScoredL1Button.setEnabled(Integer.parseInt(scoredL1Counter.getText().toString()) > 0);
-
-            notMissedL4Button.setEnabled(Integer.parseInt(missedL4Counter.getText().toString()) > 0);
-            notMissedL3Button.setEnabled(Integer.parseInt(missedL3Counter.getText().toString()) > 0);
-            notMissedL2Button.setEnabled(Integer.parseInt(missedL2Counter.getText().toString()) > 0);
-            notMissedL1Button.setEnabled(Integer.parseInt(missedL1Counter.getText().toString()) > 0);
-
-            notRemovedL3Button.setEnabled(Integer.parseInt(removedL3Counter.getText().toString()) > 0);
-            notRemovedL2Button.setEnabled(Integer.parseInt(removedL2Counter.getText().toString()) > 0);
-            notAttemptedL3Button.setEnabled(Integer.parseInt(attemptedL3Counter.getText().toString()) > 0);
-            notAttemptedL2Button.setEnabled(Integer.parseInt(attemptedL2Counter.getText().toString()) > 0);
-
-            notScoredProcessorButton.setEnabled(Integer.parseInt(scoredProcessorCounter.getText().toString()) > 0);
-            notMissedProcessorButton.setEnabled(Integer.parseInt(missedProcessorCounter.getText().toString()) > 0);
-
-            notScoredNetButton.setEnabled(Integer.parseInt(scoredNetCounter.getText().toString()) > 0);
-            notMissedNetButton.setEnabled(Integer.parseInt(missedNetCounter.getText().toString()) > 0);
         }
     }
 

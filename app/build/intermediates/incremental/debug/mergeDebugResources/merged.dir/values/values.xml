@@ -2554,6 +2554,10 @@
     <dimen name="fastscroll_default_thickness">8dp</dimen>
     <dimen name="fastscroll_margin">0dp</dimen>
     <dimen name="fastscroll_minimum_range">50dp</dimen>
+    <dimen name="field_popup_height">735dp</dimen>
+    <dimen name="field_popup_width">1200dp</dimen>
+    <dimen name="field_tower_popup_height">735dp</dimen>
+    <dimen name="field_tower_popup_width">2000dp</dimen>
     <dimen name="generate_qr_button_padding">185dp</dimen>
     <dimen name="header_text_size">30sp</dimen>
     <item format="float" name="highlight_alpha_material_colored" type="dimen">0.26</item>
@@ -2571,8 +2575,6 @@
     <dimen name="item_touch_helper_swipe_escape_max_velocity">800dp</dimen>
     <dimen name="item_touch_helper_swipe_escape_velocity">120dp</dimen>
     <dimen name="left_pos_padding">5dp</dimen>
-    <dimen name="missed_popup_height">735dp</dimen>
-    <dimen name="missed_popup_width">800dp</dimen>
     <dimen name="mtrl_bottomappbar_fabOffsetEndMode">60dp</dimen>
     <dimen name="mtrl_bottomappbar_fab_cradle_margin">5dp</dimen>
     <dimen name="mtrl_bottomappbar_fab_cradle_rounded_corner_radius">8dp</dimen>
@@ -2751,27 +2753,26 @@
     <integer name="mtrl_tab_indicator_anim_duration_ms">250</integer>
     <integer name="show_password_duration">200</integer>
     <integer name="status_bar_notification_info_maxnum">999</integer>
-    <string name="Algae">ALGAE</string>
     <string name="AllianceColorID">ALLIANCE COLOR:</string>
     <string name="AlliancePartnersID">ALLIANCE PARTNERS:</string>
     <string name="Amp">AMP</string>
-    <string name="Attempted">ATTEMPTED</string>
+    <string name="AttemptedCLimbLevelDesc">What level did they attempt to climb to?</string>
     <string name="Auton">Auton</string>
     <string name="AutonSeconds">AUTON SECONDS REMAINING</string>
-    <string name="BargeZoneHeader">BARGE ZONE</string>
     <string name="Blue">BLUE</string>
     <string name="Cancel">CANCEL</string>
+    <string name="Center">CENTER</string>
     <string name="Clear">CLEAR</string>
     <string name="ClearDirections">Are you sure you want to clear all data on the setup screen?</string>
     <string name="ClearTitle">CLEAR THIS SCREEN?</string>
     <string name="ClimbNext">NEXT: POST-MATCH</string>
     <string name="ClimbTitle">CLIMB</string>
+    <string name="ClimbingTitle">CLIMBING</string>
+    <string name="CollectingDesc">How much fuel was collected?</string>
     <string name="ControlPanelTitle">CONTROL PANEL</string>
-    <string name="Dealgaefying">REEF DEALGAEFYING</string>
-    <string name="Deep">DEEP</string>
+    <string name="DNA">DID NOT ATTEMPT</string>
     <string name="DefaultValue">000</string>
     <string name="Done">DONE</string>
-    <string name="Dropped">DROPPED</string>
     <string name="EndGameTitle">POST-MATCH</string>
     <string name="Exit">Exit</string>
     <string name="ExitTitle">EXIT</string>
@@ -2779,8 +2780,10 @@
     <string name="FellOver">Fell Over</string>
     <string name="FellOverOrDied">Fell over/Died</string>
     <string name="Ferrying">Ferrying</string>
+    <string name="FerryingDesc">How much fuel was passed to their alliance zone or partner(s)?</string>
     <string name="Fuel">FUEL</string>
-    <string name="FuelCollected">How much FUEL was collected</string>
+    <string name="FuelCollected">How much FUEL was collected?</string>
+    <string name="FuelPassed">How much FUEL was passed to their alliance zone or partner(s)?</string>
     <string name="GenerateQRCode">GENERATE QR CODE</string>
     <string name="GenerateQRDescription">Are you sure you want to generate a QR code? Once you generate a code you cannot return to the match to make changes.</string>
     <string name="GenerateQRID">GENERATE QR CODE?</string>
@@ -2788,39 +2791,30 @@
     <string name="HINT_MATCH_NUMBER">10</string>
     <string name="HINT_NAME">Rahil Shiraz</string>
     <string name="HINT_TEAM_NUMBER">1089</string>
-    <string name="Hanged">Hang</string>
-    <string name="HangedDirections">What position is the cage in?</string>
     <string name="Header">Collecting</string>
     <string name="IDPassword">PASSWORD</string>
     <string name="IDPasswordInstructions">Please enter a password to access the Settings screen</string>
     <string name="IDPasswordRequiredConfirm">Password protect app settings?</string>
     <string name="IDPasswordSettings">PASSWORD SETTINGS</string>
     <string name="InnerPortID">INNER</string>
-    <string name="L1">L1</string>
-    <string name="L2">L2</string>
-    <string name="L3">L3</string>
-    <string name="L4">L4</string>
     <string name="Leave">Leave (Robot left the starting zone)</string>
+    <string name="Left">LEFT</string>
     <string name="LowerPortID">LOWER</string>
     <string name="MatchNumberID">MATCH #:</string>
     <string name="Minus">-</string>
-    <string name="MiscDirections">Turn the toggle on if the action happens.</string>
     <string name="Missed">MISSED</string>
-    <string name="Net">NET</string>
+    <string name="MissedDesc">How much fuel was missed?</string>
+    <string name="MissedTitle">MISSED</string>
     <string name="NextMatch">SET UP NEXT MATCH</string>
     <string name="NoShow">No robot on field</string>
     <string name="OuterPortID">OUTER</string>
-    <string name="Park">Park</string>
-    <string name="PickedUp">PICKED UP</string>
     <string name="PlayedDefense">Played Defense</string>
     <string name="PleaseWait">Please Wait…\nGenerating QR Code…</string>
     <string name="Plus">+</string>
     <string name="PossessionDirections">Tap the +/- buttons to increase or decrease the counter for each option.</string>
     <string name="PossessionTitle">POSSESSION</string>
     <string name="PostMatch">Post-Match</string>
-    <string name="PostMatchDirections">Do not complete this screen until >5 seconds after the buzzer</string>
     <string name="PreloadNote">Preloaded Fuel</string>
-    <string name="Processor">PROCESSOR</string>
     <string name="QRCache">QR Code Cache</string>
     <string name="QRCacheItem">Team Number: %1$s        Match Number: %2$s</string>
     <string name="QRCode">QR Code</string>
@@ -2829,16 +2823,17 @@
     <string name="QRExitDirections">Returning to the Setup screen will erase this QR code and all of your data from this match.</string>
     <string name="QRWarningDirections">Are you sure you want to generate a QR code? Once you generate a code you cannot return to the match to make changes.</string>
     <string name="Red">RED</string>
-    <string name="Removed">REMOVED</string>
     <string name="ResetButton">RESET ALL VARIABLES</string>
     <string name="ResetDirections">If a QR code fails to generate or the app is displaying persistent and incorrect active states, tap the button below.</string>
     <string name="ResetID">RESET APP</string>
-    <string name="RightStage">RIGHT</string>
+    <string name="Right">RIGHT</string>
+    <string name="RobotFellOver">Robot fell over/Died</string>
+    <string name="RobotFellOverDesc">Did the robot fall over during autonomous?</string>
     <string name="RobotTitle">ROBOT</string>
     <string name="Save">Save</string>
     <string name="Scanned">Scanned?</string>
     <string name="Scored">SCORED</string>
-    <string name="ScoringDirections">Tap the + or - buttons to record scored/missed notes.</string>
+    <string name="ScoringDirections">Tap the + or - buttons to record scored/missed fuel.</string>
     <string name="ScoringTitle">SCORING</string>
     <string name="ScouterNameID">SCOUTER NAME:</string>
     <string name="SettingsTitle">SETTINGS</string>
@@ -2850,19 +2845,23 @@
     <string name="SetupNextMatchDirections">Returning to the Setup screen will erase this QR code and all of your data from this match.</string>
     <string name="SetupNextMatchID">DID YOU SCAN YOUR QR CODE?</string>
     <string name="SetupTitle">PRE-MATCH SETUP</string>
-    <string name="Shallow">SHALLOW</string>
     <string name="Start">START</string>
     <string name="StartButtonDirections">Press START when you hear the charge sound!</string>
+    <string name="StartDesc">How full was the robot when it started scoring?</string>
+    <string name="StartTitle">START</string>
     <string name="StartingPositionDirections">Tap on the field diagram below to mark the robot’s starting position.</string>
     <string name="StartingPositionTitle">STARTING POSITION</string>
+    <string name="StopDesc">How full was the robot when it stopped scoring?</string>
+    <string name="StopTitle">STOP</string>
+    <string name="SuccessfulClimbedLevel">None</string>
+    <string name="SuccessfullyClimbed">What level did they successfully climb to?</string>
     <string name="TeamNumberID">TEAM #:</string>
     <string name="Teleop">Teleop</string>
     <string name="TeleopError">Switch to teleop as soon as possible!</string>
     <string name="TeleopNext">NEXT: TELEOP</string>
     <string name="TeleopWarning">Teleop is starting soon...</string>
     <string name="ToggleInstructions">Tap on the toggle to record if the options are true (on) or false (off).</string>
-    <string name="TrapScoringDirections">Tap the + and - buttons to record scored/missed notes.</string>
-    <string name="TrapScoringHeader">TRAP SCORING</string>
+    <string name="TowerClimbPlacement">What level did they successfully climb to?</string>
     <string name="UpperPortID">HIGH\n(OUTER/INNER)</string>
     <string name="abc_action_bar_home_description">Navigate home</string>
     <string name="abc_action_bar_up_description">Navigate up</string>
@@ -2908,8 +2907,10 @@
     <string name="bottom_sheet_behavior" translatable="false">com.google.android.material.bottomsheet.BottomSheetBehavior</string>
     <string name="character_counter_content_description">Character limit exceeded %1$d of %2$d</string>
     <string name="character_counter_pattern" translatable="false">%1$d / %2$d</string>
+    <string name="empty_label">EMPTY</string>
     <string name="fab_transformation_scrim_behavior" translatable="false">com.google.android.material.transformation.FabTransformationScrimBehavior</string>
     <string name="fab_transformation_sheet_behavior" translatable="false">com.google.android.material.transformation.FabTransformationSheetBehavior</string>
+    <string name="full_label">FULL</string>
     <string name="hide_bottom_view_on_scroll_behavior" translatable="false">com.google.android.material.behavior.HideBottomViewOnScrollBehavior</string>
     <string name="mtrl_chip_close_icon_content_description">Remove %1$s</string>
     <string name="password_toggle_content_description">Show password</string>
@@ -2917,6 +2918,9 @@
     <string name="path_password_eye_mask_strike_through" translatable="false">M2,4.27 L19.73,22 L22.27,19.46 L4.54,1.73 L4.54,1 L23,1 L23,23 L1,23 L1,4.27 Z</string>
     <string name="path_password_eye_mask_visible" translatable="false">M2,4.27 L2,4.27 L4.54,1.73 L4.54,1.73 L4.54,1 L23,1 L23,23 L1,23 L1,4.27 Z</string>
     <string name="path_password_strike_through" translatable="false">M3.27,4.27 L19.74,20.74</string>
+    <string name="percent_25">25%</string>
+    <string name="percent_50">50%</string>
+    <string name="percent_75">75%</string>
     <string name="search_menu_title">Search</string>
     <string name="status_bar_notification_info_overflow">999+</string>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
