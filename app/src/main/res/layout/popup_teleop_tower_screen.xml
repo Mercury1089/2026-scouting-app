@@ -49,7 +49,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/CollectingTitle" />
 
-        <!-- Collecting counter toggle: -10 | -5 | - | 000 | + | +5 | +10 -->
+        <!-- Collecting counter toggle: 0-25, 26-50, 51-75, >75-->
         <RadioGroup
             android:id="@+id/CollectingCounterToggle"
             android:layout_width="500dp"
@@ -61,7 +61,7 @@
             app:layout_constraintTop_toBottomOf="@+id/CollectingDesc">
 
             <RadioButton
-                android:id="@+id/CollectingMinus10"
+                android:id="@+id/Collecting0To25Fuel"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -69,12 +69,12 @@
                 android:button="@null"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center"
-                android:text="-10"
+                android:text="0 - 25"
                 android:textColor="@drawable/text_states"
                 android:textSize="@dimen/button_text_size" />
 
             <RadioButton
-                android:id="@+id/CollectingMinus5"
+                android:id="@+id/Collecting26To50Fuel"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -82,12 +82,12 @@
                 android:button="@null"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center"
-                android:text="-5"
+                android:text="26 - 50"
                 android:textColor="@drawable/text_states"
                 android:textSize="@dimen/button_text_size" />
 
             <RadioButton
-                android:id="@+id/CollectingMinus"
+                android:id="@+id/Collecting51to755Fuel"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -95,59 +95,21 @@
                 android:button="@null"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center"
-                android:text="-"
+                android:text="51 - 75"
                 android:textColor="@drawable/text_states"
                 android:textSize="@dimen/button_text_size" />
 
             <RadioButton
-                android:id="@+id/CollectingCounter"
+                android:id="@+id/CollectingMoreThan75Fuel"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
+                android:background="@drawable/toggle_left_states"
                 android:button="@null"
                 android:checked="true"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center"
-                android:text="000"
-                android:textColor="@drawable/text_states"
-                android:textSize="@dimen/button_text_size" />
-
-            <RadioButton
-                android:id="@+id/CollectingPlus"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/toggle_left_states"
-                android:button="@null"
-                android:fontFamily="@font/open_sans"
-                android:gravity="center"
-                android:text="+"
-                android:textColor="@drawable/text_states"
-                android:textSize="@dimen/button_text_size" />
-
-            <RadioButton
-                android:id="@+id/CollectingPlus5"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/toggle_left_states"
-                android:button="@null"
-                android:fontFamily="@font/open_sans"
-                android:gravity="center"
-                android:text="+5"
-                android:textColor="@drawable/text_states"
-                android:textSize="@dimen/button_text_size" />
-
-            <RadioButton
-                android:id="@+id/CollectingPlus10"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/toggle_right_states"
-                android:button="@null"
-                android:fontFamily="@font/open_sans"
-                android:gravity="center"
-                android:text="+10"
+                android:text=">75"
                 android:textColor="@drawable/text_states"
                 android:textSize="@dimen/button_text_size" />
         </RadioGroup>
@@ -183,19 +145,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/FerryingTitle" />
 
-        <!-- Ferrying counter toggle: -10 | -5 | - | 000 | + | +5 | +10 -->
+        <!-- Ferrying counter toggle: 0-25, 26-50, 51-75, >75-->
         <RadioGroup
             android:id="@+id/FerryingCounterToggle"
             android:layout_width="500dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="FerryingDesc"
+            app:layout_constraintEnd_toEndOf="CollectingDesc"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/FerryingDesc">
 
             <RadioButton
-                android:id="@+id/FerryingMinus10"
+                android:id="@+id/Ferrying0To25Fuel"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -203,12 +165,12 @@
                 android:button="@null"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center"
-                android:text="-10"
+                android:text="0 - 25"
                 android:textColor="@drawable/text_states"
                 android:textSize="@dimen/button_text_size" />
 
             <RadioButton
-                android:id="@+id/FerryingMinus5"
+                android:id="@+id/Ferrying26To50Fuel"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -216,12 +178,12 @@
                 android:button="@null"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center"
-                android:text="-5"
+                android:text="26 - 50"
                 android:textColor="@drawable/text_states"
                 android:textSize="@dimen/button_text_size" />
 
             <RadioButton
-                android:id="@+id/FerryingMinus"
+                android:id="@+id/Ferrying51to755Fuel"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -229,59 +191,21 @@
                 android:button="@null"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center"
-                android:text="-"
+                android:text="51 - 75"
                 android:textColor="@drawable/text_states"
                 android:textSize="@dimen/button_text_size" />
 
             <RadioButton
-                android:id="@+id/FerryingZero"
+                android:id="@+id/FerryingMoreThan75Fuel"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
+                android:background="@drawable/toggle_left_states"
                 android:button="@null"
                 android:checked="true"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center"
-                android:text="000"
-                android:textColor="@drawable/text_states"
-                android:textSize="@dimen/button_text_size" />
-
-            <RadioButton
-                android:id="@+id/FerryingPlus"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/toggle_left_states"
-                android:button="@null"
-                android:fontFamily="@font/open_sans"
-                android:gravity="center"
-                android:text="+"
-                android:textColor="@drawable/text_states"
-                android:textSize="@dimen/button_text_size" />
-
-            <RadioButton
-                android:id="@+id/FerryingPlus5"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/toggle_left_states"
-                android:button="@null"
-                android:fontFamily="@font/open_sans"
-                android:gravity="center"
-                android:text="+5"
-                android:textColor="@drawable/text_states"
-                android:textSize="@dimen/button_text_size" />
-
-            <RadioButton
-                android:id="@+id/FerryingPlus10"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/toggle_right_states"
-                android:button="@null"
-                android:fontFamily="@font/open_sans"
-                android:gravity="center"
-                android:text="+10"
+                android:text=">75"
                 android:textColor="@drawable/text_states"
                 android:textSize="@dimen/button_text_size" />
         </RadioGroup>
@@ -300,8 +224,8 @@
             android:text="@string/ScoringTitle"
             android:textColor="@drawable/text_header_states"
             android:textSize="@dimen/header_text_size"
-            app:layout_constraintBottom_toTopOf="@+id/StartTitle"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/StartTitle" />
 
         <TextView
             android:id="@+id/StartTitle"
@@ -542,7 +466,7 @@
             app:layout_constraintStart_toStartOf="@+id/MissedTitle"
             app:layout_constraintTop_toBottomOf="@+id/MissedTitle" />
 
-        <!-- Missed counter toggle: -10 | -5 | - | 000 | + | +5 | +10 -->
+        <!-- Missed counter toggle: 0-25, 26-50, 51-75, >75-->
         <RadioGroup
             android:id="@+id/MissedCounterToggle"
             android:layout_width="500dp"
@@ -553,7 +477,7 @@
             app:layout_constraintTop_toBottomOf="@+id/MissedDesc">
 
             <RadioButton
-                android:id="@+id/MissedMinus10"
+                android:id="@+id/Missed0To25Fuel"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -561,12 +485,12 @@
                 android:button="@null"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center"
-                android:text="-10"
+                android:text="0 - 25"
                 android:textColor="@drawable/text_states"
                 android:textSize="@dimen/button_text_size" />
 
             <RadioButton
-                android:id="@+id/MissedMinus5"
+                android:id="@+id/Missed26To50Fuel"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -574,12 +498,12 @@
                 android:button="@null"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center"
-                android:text="-5"
+                android:text="26 - 50"
                 android:textColor="@drawable/text_states"
                 android:textSize="@dimen/button_text_size" />
 
             <RadioButton
-                android:id="@+id/MissedMinus"
+                android:id="@+id/Missed51to755Fuel"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -587,59 +511,21 @@
                 android:button="@null"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center"
-                android:text="-"
+                android:text="51 - 75"
                 android:textColor="@drawable/text_states"
                 android:textSize="@dimen/button_text_size" />
 
             <RadioButton
-                android:id="@+id/MissedZero"
+                android:id="@+id/MissedMoreThan75Fuel"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
+                android:background="@drawable/toggle_left_states"
                 android:button="@null"
                 android:checked="true"
                 android:fontFamily="@font/open_sans"
                 android:gravity="center"
-                android:text="000"
-                android:textColor="@drawable/text_states"
-                android:textSize="@dimen/button_text_size" />
-
-            <RadioButton
-                android:id="@+id/MissedPlus"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/toggle_left_states"
-                android:button="@null"
-                android:fontFamily="@font/open_sans"
-                android:gravity="center"
-                android:text="+"
-                android:textColor="@drawable/text_states"
-                android:textSize="@dimen/button_text_size" />
-
-            <RadioButton
-                android:id="@+id/MissedPlus5"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/toggle_left_states"
-                android:button="@null"
-                android:fontFamily="@font/open_sans"
-                android:gravity="center"
-                android:text="+5"
-                android:textColor="@drawable/text_states"
-                android:textSize="@dimen/button_text_size" />
-
-            <RadioButton
-                android:id="@+id/MissedPlus10"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/toggle_right_states"
-                android:button="@null"
-                android:fontFamily="@font/open_sans"
-                android:gravity="center"
-                android:text="+10"
+                android:text=">75"
                 android:textColor="@drawable/text_states"
                 android:textSize="@dimen/button_text_size" />
         </RadioGroup>
@@ -861,6 +747,7 @@
                 android:textColor="@drawable/text_states"
                 android:textSize="@dimen/button_text_size" />
         </RadioGroup>
+
         <!-- ═════════════════════════════════════════
              BUTTONS
              ═════════════════════════════════════════ -->
@@ -900,6 +787,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!-- CARET POINTER -->
     <View
         android:id="@+id/carat"
         android:layout_width="@dimen/carat_width"
