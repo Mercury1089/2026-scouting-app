@@ -50,25 +50,25 @@
         <string name="GenerateQRCode">GENERATE QR CODE</string>
 
 <!--Organize After-->
-    <string name="CollectingDesc">How much fuel was collected</string>
-    <string name="FerryingDesc">How much fuel was passed to their alliance zone or partner(s)</string>
+    <string name="CollectingDesc">How much fuel was collected?</string>
+    <string name="FerryingDesc">How much fuel was passed to their alliance zone or partner(s)?</string>
     <string name="StartTitle">START</string>
-    <string name="StartDesc">How full was the robot when it started scoring</string>
+    <string name="StartDesc">How full was the robot when it started scoring?</string>
     <string name="StopTitle">STOP</string>
-    <string name="StopDesc">How full was the robot when it stopped scoring</string>
+    <string name="StopDesc">How full was the robot when it stopped scoring?</string>
     <string name="MissedTitle">MISSED</string>
-    <string name="MissedDesc">How much fuel was missed</string>
+    <string name="MissedDesc">How much fuel was missed?</string>
     <string name="empty_label">EMPTY</string>
     <string name="full_label">FULL</string>
     <string name="percent_25">25%</string>
     <string name="percent_50">50%</string>
     <string name="percent_75">75%</string>
     <string name="RobotFellOver">Robot fell over</string>
-    <string name="RobotFellOverDesc">Did the robot fall over during autonomous</string>
+    <string name="RobotFellOverDesc">Did the robot fall over during autonomous?</string>
     <string name="Header">Collecting</string>
-    <string name="FuelCollected">How much FUEL was collected</string>
+    <string name="FuelCollected">How much FUEL was collected?</string>
     <string name="Ferrying">Ferrying</string>
-    <string name="FuelPassed">How much FUEL was passed to their alliance zone or partner(s)</string>
+    <string name="FuelPassed">How much FUEL was passed to their alliance zone or partner(s)?</string>
 
     <string name="ClimbingTitle">CLIMBING</string>
     <string name="AttemptedCLimbLevelDesc">What level did they attempt to climb to?</string>
@@ -82,7 +82,7 @@
 
     <string name="Plus">+</string>
     <string name="Minus">-</string>
-    <string name="ScoringDirections">Tap the + or - buttons to record scored/missed notes.</string>
+    <string name="ScoringDirections">Tap the + or - buttons to record scored/missed fuel.</string>
     <!--Check Scored and Missed to see if they are used anywhere-->
     <string name="Scored">SCORED</string>
     <string name="Missed">MISSED</string>
