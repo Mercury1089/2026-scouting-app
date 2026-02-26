@@ -309,6 +309,7 @@ public class HashMapManager{
                 settingsHashMap.put("NothingToSeeHere", "0");
                 settingsHashMap.put("Slack", "0");
                 settingsHashMap.put("DefaultPassword", "abc");
+                break;
             case SETUP:
                 setupHashMap.put("HashMapName", "Setup");
                 setupHashMap.put("ScouterName", "");
@@ -320,6 +321,7 @@ public class HashMapManager{
                 setupHashMap.put("AlliancePartner1", "");
                 setupHashMap.put("AlliancePartner2", "");
                 setupHashMap.put("AllianceColor", "");
+                setupHashMap.put("PreloadedCargo", "0");
                 //Note: FellOver is put in setup hashmap because its value may be updated in Auton, Teleop, or Climb
                 setupHashMap.put("FellOver", "N");
                 break;

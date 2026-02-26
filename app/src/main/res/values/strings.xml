@@ -86,7 +86,6 @@
     <!--Check Scored and Missed to see if they are used anywhere-->
     <string name="Scored">SCORED</string>
     <string name="Missed">MISSED</string>
-    <string name="MiscDirections">Turn the toggle on if the action happens.</string>
     <string name="Leave">Leave (Robot left the starting zone)</string>
     <string name="FellOver">Fell Over</string>
     <string name="TeleopWarning">Teleop is starting soon...</string>

@@ -56,20 +56,20 @@ public class PregameActivity extends AppCompatActivity {
 
     //Switches
     private Switch noShowSwitch;
-    private Switch preloadSwitch;
+    private ImageButton preloadCargoMinus;
+    private ImageButton preloadCargoPlus;
+    private TextView preloadCargoDisplay;
 
     //HashMaps
     private LinkedHashMap<String, String> settingsHashMap;
     private LinkedHashMap<String, String> setupHashMap;
-
     private Dialog loading_alert;
     private ProgressDialog progressDialog;
-
-
-    Bitmap bitmap;
-    //ProgressDialog progressDialog;
     boolean isQRButton = false;
 
+    //Max and Min of of Preloading
+    private static final int PRELOAD_CARGO_MAX = 8;
+    private static final int PRELOAD_CARGO_MIN = 0;
     //others
     private MediaPlayer rooster;
     private ImageView slackCenter;
@@ -92,14 +92,24 @@ public class PregameActivity extends AppCompatActivity {
         teamNumberInput = findViewById(R.id.TeamNumberInput);
         firstAlliancePartnerInput = findViewById(R.id.FirstAlliancePartnerInput);
         secondAlliancePartnerInput = findViewById(R.id.SecondAlliancePartnerInput);
+
+        //Alliance Color
         blueButton = findViewById(R.id.BlueButton);
         redButton = findViewById(R.id.RedButton);
-        noShowSwitch = findViewById(R.id.NoShowSwitch);
-        preloadSwitch = findViewById(R.id.PreloadedCargoSwitch);
+
+        //Buttons
         clearButton = findViewById(R.id.ClearButton);
         startButton = findViewById(R.id.StartButton);
         settingsButton = findViewById(R.id.SettingsButton);
+
+        //Preload Cargo Button
+        preloadCargoMinus = findViewById(R.id.PreloadedCargoMinus);
+        preloadCargoPlus = findViewById(R.id.PreloadedCargoPlus);
+        preloadCargoDisplay = findViewById(R.id.PreloadedCargoDisplay);
+
+        //misc
         startDirectionsToast = findViewById(R.id.IDStartDirections);
+        noShowSwitch = findViewById(R.id.NoShowSwitch);
 
         rooster = MediaPlayer.create(PregameActivity.this, R.raw.sound);
 
@@ -199,15 +209,6 @@ public class PregameActivity extends AppCompatActivity {
                 if (isChecked)
                     setupHashMap.put("PreloadNote", "N");
                 setupHashMap.put("NoShow", isChecked ? "Y" : "N");
-                updateXMLObjects(false);
-            }
-        });
-
-        //starting listener to check status of switch
-        preloadSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                setupHashMap.put("PreloadNote", isChecked ? "Y" : "N");
                 updateXMLObjects(false);
             }
         });
@@ -359,6 +360,20 @@ public class PregameActivity extends AppCompatActivity {
             }
         });
 
+        preloadCargoMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                decrementPreloadCargo();
+            }
+        });
+
+        preloadCargoPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                incrementPreloadCargo();
+            }
+        });
+
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -498,6 +513,41 @@ public class PregameActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(ev);
     }
 
+
+    private void incrementPreloadCargo() {
+        int currentCargo = getPreloadCargoCount();
+        if (currentCargo < PRELOAD_CARGO_MAX) {
+            currentCargo++;
+            updatePreloadCargoCount(currentCargo);
+        }
+    }
+
+    private void decrementPreloadCargo() {
+        int currentCargo = getPreloadCargoCount();
+        if (currentCargo > PRELOAD_CARGO_MIN) {
+            currentCargo--;
+            updatePreloadCargoCount(currentCargo);
+        }
+    }
+
+    private int getPreloadCargoCount() {
+        try {
+            String cargoStr = setupHashMap.get("PreloadedCargo");
+            return Integer.parseInt(cargoStr != null ? cargoStr : "0");
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+
+    private void updatePreloadCargoCount(int count) {
+        setupHashMap.put("PreloadedCargo", String.valueOf(count));
+        updatePreloadCargoDisplay(count);
+    }
+
+    private void updatePreloadCargoDisplay(int count) {
+        preloadCargoDisplay.setText(String.format("%03d", count));
+    }
+
     /*
     - Validate text field input and toggle values to make sure it is safe (and necessary) to
     - move into the MatchActivity
@@ -523,7 +573,7 @@ public class PregameActivity extends AppCompatActivity {
                 noShowSwitch.isChecked() ||
                 firstAlliancePartnerInput.getText().length() > 0 ||
                 secondAlliancePartnerInput.getText().length() > 0 ||
-                blueButton.isSelected() || redButton.isSelected();
+                blueButton.isSelected() || redButton.isSelected() || getPreloadCargoCount() > 0;
     }
 
     /*
@@ -545,6 +595,8 @@ public class PregameActivity extends AppCompatActivity {
             teamNumberInput.setText(setupHashMap.get("TeamNumber"));
             firstAlliancePartnerInput.setText(setupHashMap.get("AlliancePartner1"));
             secondAlliancePartnerInput.setText(setupHashMap.get("AlliancePartner2"));
+            int preloadCount = getPreloadCargoCount();
+            updatePreloadCargoDisplay(preloadCount);
         }
 
         blueButton.setSelected(setupHashMap.get("AllianceColor").equals("Blue"));
@@ -553,10 +605,7 @@ public class PregameActivity extends AppCompatActivity {
         if (settingsHashMap.get("Slack").equals("1"))
             slackCenter.setVisibility(View.VISIBLE);
 
-        preloadSwitch.setChecked(setupHashMap.get("PreloadNote").equals("Y"));
-
         if (setupHashMap.get("NoShow").equals("Y")) {
-            preloadSwitch.setEnabled(false);
             noShowSwitch.setChecked(true);
 
             startButton.setPadding(185, 0, 185, 0);
@@ -564,7 +613,6 @@ public class PregameActivity extends AppCompatActivity {
             startButton.setCompoundDrawablesRelativeWithIntrinsicBounds(this.getDrawable(R.drawable.qr), null, null, null);
             isQRButton = true;
         } else {
-            preloadSwitch.setEnabled(true);
             noShowSwitch.setChecked(false);
             startButton.setCompoundDrawablesRelativeWithIntrinsicBounds(this.getDrawable(R.drawable.start_button_symbol_states), null, null, null);
             startButton.setPadding(234, 0, 234, 0);
