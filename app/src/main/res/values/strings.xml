@@ -63,7 +63,7 @@
     <string name="percent_25">25%</string>
     <string name="percent_50">50%</string>
     <string name="percent_75">75%</string>
-    <string name="RobotFellOver">Robot fell over</string>
+    <string name="RobotFellOver">Robot fell over/Died</string>
     <string name="RobotFellOverDesc">Did the robot fall over during autonomous?</string>
     <string name="Header">Collecting</string>
     <string name="FuelCollected">How much FUEL was collected?</string>
