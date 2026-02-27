@@ -715,7 +715,7 @@
             app:layout_constraintTop_toBottomOf="@+id/ClimbingDesc">
 
             <RadioButton
-                android:id="@+id/DidNotAttempt"
+                android:id="@+id/SuccessfulNo"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -728,7 +728,7 @@
                 android:textSize="@dimen/button_text_size" />
 
             <RadioButton
-                android:id="@+id/AchievedLevel1"
+                android:id="@+id/SuccessfulYes"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"

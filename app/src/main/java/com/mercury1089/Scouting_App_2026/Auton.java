@@ -311,6 +311,34 @@ public class Auton extends Fragment implements UpdateListener {
                     robotFellOverSwitch.setChecked("Y".equals(robotFellValue));
                 }
 
+                private void setupRedAllianceGridListeners() {
+                    if (redAllianceGrid == null) return;
+
+                    for (int row = 0; row < 5; row++) {
+                        for (int col = 0; col < 6; col++) {
+                            String zoneId = "red_" + row + "_" + col;
+                            ImageButton button = findGridButton(redAllianceGrid, zoneId);
+                            if (button != null) {
+                                button.setOnClickListener(v -> onGridZoneClicked(zoneId, "FIELD"));
+                            }
+                        }
+                    }
+                }
+
+                private void setupBlueAllianceGridListeners() {
+                    if (blueAllianceGrid == null) return;
+
+                    for (int row = 0; row < 5; row++) {
+                        for (int col = 0; col < 6; col++) {
+                            String zoneId = "blue_" + row + "_" + col;
+                            ImageButton button = findGridButton(blueAllianceGrid, zoneId);
+                            if (button != null) {
+                                button.setOnClickListener(v -> onGridZoneClicked(zoneId, "FIELD"));
+                            }
+                        }
+                    }
+                }
+
 /**
  * Save field popup data to HashMap for the given zone
  */
@@ -593,7 +621,28 @@ public class Auton extends Fragment implements UpdateListener {
         setRadioGroupEnabled(missedToggle, bothScoringLevelsSelected);
     }
 
-    //ADD: Helper method - Enable or disable all buttons in a RadioGroup
+
+    public void updateXMLObjects(){
+        setupHashMap = HashMapManager.getSetupHashMap();
+        autonHashMap = HashMapManager.getAutonHashMap();
+
+        if(setupHashMap == null || autonHashMap == null) {
+            return;
+        }
+
+        // Update Leave and Fell Over switches based on saved data
+        if(autonHashMap.containsKey("Leave")) {
+            leaveSwitch.setChecked(autonHashMap.get("Leave").equals("true"));
+        }
+        if(autonHashMap.containsKey("FellOver")) {
+            fellOverSwitch.setChecked(autonHashMap.get("FellOver").equals("true"));
+        }
+
+        // Call grid visual update to show saved data
+        updateGridVisuals();
+    }
+
+    //Helper method - Enable or disable all buttons in a RadioGroup
     /**
      * Enable or disable all radio buttons in a group
      */

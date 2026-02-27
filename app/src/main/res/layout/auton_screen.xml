@@ -126,6 +126,139 @@
         <ImageButton android:id="@+id/blue_4_5" android:tag="blue_4_5" android:layout_row="4" android:layout_column="5" android:layout_width="0dp" android:layout_height="0dp" android:background="@drawable/position_box_outlined_neutral" android:scaleType="fitCenter" android:contentDescription="Blue Position Row 4 Col 5" android:src="@android:color/transparent" app:layout_columnWeight="1" app:layout_rowWeight="1" />
     </GridLayout>
 
+    <TextView
+        android:id="@+id/IDMiscDirections"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/futura_medium_condensed_bt"
+        android:text="Scoring Directions"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/blueAllianceGrid" />
+
+    <LinearLayout
+        android:id="@+id/leaveSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/IDMiscDirections">
+
+        <TextView
+            android:id="@+id/IDLeave"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Left Starting Area"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:gravity="center_vertical" />
+
+        <Switch
+            android:id="@+id/LeaveSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fellOverSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/leaveSection">
+
+        <TextView
+            android:id="@+id/IDFellOver"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Fell Over"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:gravity="center_vertical" />
+
+        <Switch
+            android:id="@+id/FellOverSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp" />
+
+    </LinearLayout>
+
+    <!-- TOP EDGE BAR -->
+    <ImageView
+        android:id="@+id/topEdgeBar"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:visibility="gone"
+        android:background="@android:color/holo_yellow_light"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fellOverSection" />
+
+    <!-- BOTTOM EDGE BAR -->
+    <ImageView
+        android:id="@+id/bottomEdgeBar"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:visibility="gone"
+        android:background="@android:color/holo_yellow_light"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/autonTimerBar" />
+
+    <!-- LEFT EDGE BAR -->
+    <ImageView
+        android:id="@+id/leftEdgeBar"
+        android:layout_width="4dp"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@android:color/holo_yellow_light"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fellOverSection"
+        app:layout_constraintBottom_toTopOf="@+id/autonTimerBar" />
+
+    <!-- RIGHT EDGE BAR -->
+    <ImageView
+        android:id="@+id/rightEdgeBar"
+        android:layout_width="4dp"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@android:color/holo_yellow_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fellOverSection"
+        app:layout_constraintBottom_toTopOf="@+id/autonTimerBar" />
+
+    <Button
+        android:id="@+id/NextTeleopButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Next: Teleop Phase"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:background="@drawable/button_large_active"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/autonTimerBar" />
+
     <!-- AUTON TIMER BAR -->
     <LinearLayout
         android:id="@+id/autonTimerBar"
@@ -138,6 +271,25 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/IDAutonSeconds1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Auton Time:" />
+
+        <TextView
+            android:id="@+id/AutonSeconds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20" />
+
+        <TextView
+            android:id="@+id/TeleopWarning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⚠️ TELEOP STARTING!"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/timerIcon"
