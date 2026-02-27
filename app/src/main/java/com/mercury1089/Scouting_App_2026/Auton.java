@@ -8,6 +8,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
+import android.os.Build;
 import android.os.Vibrator;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -23,6 +24,8 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import java.util.LinkedHashMap;
+
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import android.app.Dialog;
 import android.view.Window;
@@ -44,7 +47,7 @@ public class Auton extends Fragment implements UpdateListener {
     // Instructions
     private TextView scoringDirectionsID;
 
-    // Grid layouts for field zones - KEEP THIS
+    // Grid layouts for field zones
     private GridLayout redAllianceGrid;
     private GridLayout blueAllianceGrid;
     private Dialog popupDialog;
@@ -76,10 +79,8 @@ public class Auton extends Fragment implements UpdateListener {
     private boolean running = true;
     private ValueAnimator teleopButtonAnimation;
     private AnimatorSet animatorSet;
+    private MatchActivity context;
 
-    /*
-    - Runs when a new instance of this fragment is created (i.e. when it is first loaded in from PregameActivity.java)
-     */
     public static Auton newInstance() {
         Auton fragment = new Auton();
         Bundle args = new Bundle();
@@ -87,7 +88,6 @@ public class Auton extends Fragment implements UpdateListener {
         return fragment;
     }
 
-    MatchActivity context;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         context = (MatchActivity) getActivity();
@@ -101,6 +101,7 @@ public class Auton extends Fragment implements UpdateListener {
         return inflated;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void onStart() {
         setupHashMap = HashMapManager.getSetupHashMap();
         autonHashMap = HashMapManager.getAutonHashMap();
@@ -110,39 +111,36 @@ public class Auton extends Fragment implements UpdateListener {
         redAllianceGrid = getView().findViewById(R.id.redAllianceGrid);
         blueAllianceGrid = getView().findViewById(R.id.blueAllianceGrid);
 
-        // Link misc direction labels (if not already added)
+        // Link misc direction labels
         miscInstructionsID = getView().findViewById(R.id.IDMiscDirections);
         leaveID = getView().findViewById(R.id.IDLeave);
+        leaveSwitch = getView().findViewById(R.id.LeaveSwitch);
         fellOverID = getView().findViewById(R.id.IDFellOver);
+        fellOverSwitch = getView().findViewById(R.id.FellOverSwitch);
 
-
-        //linking variables to XML elements on the screen
+        // Link timer views
         timerID = getView().findViewById(R.id.IDAutonSeconds1);
         secondsRemaining = getView().findViewById(R.id.AutonSeconds);
         teleopWarning = getView().findViewById(R.id.TeleopWarning);
+        scoringDirectionsID = getView().findViewById(R.id.IDPossessionDirections);
 
-            scoringDirectionsID = getView().findViewById(R.id.IDPossessionDirections);
-
-
+        // Link border bars
         topEdgeBar = getView().findViewById(R.id.topEdgeBar);
         bottomEdgeBar = getView().findViewById(R.id.bottomEdgeBar);
         leftEdgeBar = getView().findViewById(R.id.leftEdgeBar);
         rightEdgeBar = getView().findViewById(R.id.rightEdgeBar);
 
+        // Link next button
         nextButton = getView().findViewById(R.id.NextTeleopButton);
 
-        //get HashMap data (fill with defaults if empty or null)
+        // Get HashMap data (fill with defaults if empty or null)
         HashMapManager.checkNullOrEmpty(HashMapManager.HASH.SETUP);
         HashMapManager.checkNullOrEmpty(HashMapManager.HASH.AUTON);
         setupHashMap = HashMapManager.getSetupHashMap();
         autonHashMap = HashMapManager.getAutonHashMap();
 
-        //fill in counters with data
+        // Fill in counters with data
         updateXMLObjects();
-
-        // Setup grid zone click listeners
-        setupRedAllianceGridListeners();
-        setupBlueAllianceGridListeners();
 
         Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -154,7 +152,7 @@ public class Auton extends Fragment implements UpdateListener {
                 if(!running)
                     return;
 
-                if (millisUntilFinished / 1000 <= 3 && millisUntilFinished / 1000 > 0) {  //play the blinking animation
+                if (millisUntilFinished / 1000 <= 3 && millisUntilFinished / 1000 > 0) {
                     teleopWarning.setVisibility(View.VISIBLE);
                     timerID.setTextColor(context.getResources().getColor(R.color.banana));
                     timerID.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.timer_yellow, 0, 0, 0);
@@ -183,292 +181,10 @@ public class Auton extends Fragment implements UpdateListener {
                     AnimatorSet animatorSet = new AnimatorSet();
                     animatorSet.playTogether(topEdgeLighter, bottomEdgeLighter, leftEdgeLighter, rightEdgeLighter);
                     animatorSet.start();
-
-                }
-
-                /**
-                 * Setup click listeners for all red alliance grid zones (6 columns x 5 rows)
-                 */
-                private void setupRedAllianceGridListeners() {
-                    if (redAllianceGrid == null) return;
-
-                    for (int row = 0; row < 5; row++) {
-                        for (int col = 0; col < 6; col++) {
-                            String zoneId = "red_" + row + "_" + col;
-                            ImageButton button = findGridButton(redAllianceGrid, zoneId);
-                            if (button != null) {
-                                button.setOnClickListener(v -> onGridZoneClicked(zoneId, "field"));
-                            }
-                        }
-                    }
-                }
-
-/**
- * Setup click listeners for all blue alliance grid zones (6 columns x 5 rows)
- */
-                private void setupBlueAllianceGridListeners() {
-                    if (blueAllianceGrid == null) return;
-
-                    for (int row = 0; row < 5; row++) {
-                        for (int col = 0; col < 6; col++) {
-                            String zoneId = "blue_" + row + "_" + col;
-                            ImageButton button = findGridButton(blueAllianceGrid, zoneId);
-                            if (button != null) {
-                                button.setOnClickListener(v -> onGridZoneClicked(zoneId, "field"));
-                            }
-                        }
-                    }
-                }
-
-/**
- * Find an ImageButton in the grid by its tag
- */
-                private ImageButton findGridButton(GridLayout grid, String tag) {
-                    for (int i = 0; i < grid.getChildCount(); i++) {
-                        View child = grid.getChildAt(i);
-                        if (child instanceof ImageButton && tag.equals(child.getTag())) {
-                            return (ImageButton) child;
-                        }
-                    }
-                    return null;
-                }
-
-/**
- * Handle grid zone click - show field popup
- */
-                private void onGridZoneClicked(String zoneId, String popupType) {
-                    currentSelectedZone = zoneId;
-                    if ("field".equals(popupType)) {
-                        showFieldPopup(zoneId);
-                    }
-                }
-
-/**
- * Show the field popup for a specific grid zone
- */
-                private void showFieldPopup(String zoneId) {
-                    popupDialog = new Dialog(context);
-                    popupDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    popupDialog.setContentView(R.layout.popup_auton_field_screen);
-
-                    // Get UI elements from popup
-                    RadioGroup collectingToggle = popupDialog.findViewById(R.id.CollectingCounterToggle);
-                    RadioGroup ferryingToggle = popupDialog.findViewById(R.id.FerryingCounterToggle);
-                    RadioGroup startLevelToggle = popupDialog.findViewById(R.id.StartLevelToggle);
-                    RadioGroup stopLevelToggle = popupDialog.findViewById(R.id.StopLevelToggle);
-                    RadioGroup missedToggle = popupDialog.findViewById(R.id.MissedCounterToggle);
-                    Switch robotFellOverSwitch = popupDialog.findViewById(R.id.NoShowSwitch);
-
-                    Button saveButton = popupDialog.findViewById(R.id.SaveButton);
-                    Button cancelButton = popupDialog.findViewById(R.id.CancelButton);
-
-                    // Load existing data for this zone
-                    loadFieldPopupData(zoneId, collectingToggle, ferryingToggle, startLevelToggle, stopLevelToggle, missedToggle, robotFellOverSwitch);
-
-                    //ADD: Add listeners to all radio groups to update button states when selections change
-                    RadioGroup.OnCheckedChangeListener stateUpdateListener = (group, checkedId) ->
-                            updatePopupButtonStates(collectingToggle, ferryingToggle, startLevelToggle, stopLevelToggle, missedToggle);
-
-                    startLevelToggle.setOnCheckedChangeListener(stateUpdateListener);
-                    stopLevelToggle.setOnCheckedChangeListener(stateUpdateListener);
-                    missedToggle.setOnCheckedChangeListener(stateUpdateListener);
-
-//ADD: Update button states on popup open
-                    updatePopupButtonStates(collectingToggle, ferryingToggle, startLevelToggle, stopLevelToggle, missedToggle);
-
-                    // Save button listener
-                    saveButton.setOnClickListener(v -> {
-                        saveFieldPopupData(zoneId, collectingToggle, ferryingToggle, startLevelToggle, stopLevelToggle, missedToggle, robotFellOverSwitch);
-                        popupDialog.dismiss();
-                        updateGridVisuals();
-                    });
-
-                    // Cancel button listener
-                    cancelButton.setOnClickListener(v -> popupDialog.dismiss());
-
-                    popupDialog.show();
-                }
-
-/**
- * Load field popup data from HashMap for the given zone
- */
-                private void loadFieldPopupData(String zoneId, RadioGroup collectingToggle, RadioGroup ferryingToggle,
-                        RadioGroup startLevelToggle, RadioGroup stopLevelToggle,
-                        RadioGroup missedToggle, Switch robotFellOverSwitch) {
-                    String collectingValue = autonHashMap.getOrDefault(zoneId + "_Collecting", "000");
-                    String ferryingValue = autonHashMap.getOrDefault(zoneId + "_Ferrying", "000");
-                    String startLevelValue = autonHashMap.getOrDefault(zoneId + "_StartLevel", "Empty");
-                    String stopLevelValue = autonHashMap.getOrDefault(zoneId + "_StopLevel", "Empty");
-                    String missedValue = autonHashMap.getOrDefault(zoneId + "_Missed", "000");
-                    String robotFellValue = autonHashMap.getOrDefault(zoneId + "_RobotFellOver", "N");
-
-                    // Set radio button selections based on values
-                    setCounterValue(collectingToggle, collectingValue);
-                    setCounterValue(ferryingToggle, ferryingValue);
-                    setLevelValue(startLevelToggle, startLevelValue);
-                    setLevelValue(stopLevelToggle, stopLevelValue);
-                    setCounterValue(missedToggle, missedValue);
-                    robotFellOverSwitch.setChecked("Y".equals(robotFellValue));
-                }
-
-                private void setupRedAllianceGridListeners() {
-                    if (redAllianceGrid == null) return;
-
-                    for (int row = 0; row < 5; row++) {
-                        for (int col = 0; col < 6; col++) {
-                            String zoneId = "red_" + row + "_" + col;
-                            ImageButton button = findGridButton(redAllianceGrid, zoneId);
-                            if (button != null) {
-                                button.setOnClickListener(v -> onGridZoneClicked(zoneId, "FIELD"));
-                            }
-                        }
-                    }
-                }
-
-                private void setupBlueAllianceGridListeners() {
-                    if (blueAllianceGrid == null) return;
-
-                    for (int row = 0; row < 5; row++) {
-                        for (int col = 0; col < 6; col++) {
-                            String zoneId = "blue_" + row + "_" + col;
-                            ImageButton button = findGridButton(blueAllianceGrid, zoneId);
-                            if (button != null) {
-                                button.setOnClickListener(v -> onGridZoneClicked(zoneId, "FIELD"));
-                            }
-                        }
-                    }
-                }
-
-/**
- * Save field popup data to HashMap for the given zone
- */
-                private void saveFieldPopupData(String zoneId, RadioGroup collectingToggle, RadioGroup ferryingToggle,
-                        RadioGroup startLevelToggle, RadioGroup stopLevelToggle,
-                        RadioGroup missedToggle, Switch robotFellOverSwitch) {
-                    // Get selected values from radio groups
-                    String collectingValue = getCounterValue(collectingToggle);
-                    String ferryingValue = getCounterValue(ferryingToggle);
-                    String startLevelValue = getLevelValue(startLevelToggle);
-                    String stopLevelValue = getLevelValue(stopLevelToggle);
-                    String missedValue = getCounterValue(missedToggle);
-                    String robotFellValue = robotFellOverSwitch.isChecked() ? "Y" : "N";
-
-                    // Store in HashMap
-                    autonHashMap.put(zoneId + "_Collecting", collectingValue);
-                    autonHashMap.put(zoneId + "_Ferrying", ferryingValue);
-                    autonHashMap.put(zoneId + "_StartLevel", startLevelValue);
-                    autonHashMap.put(zoneId + "_StopLevel", stopLevelValue);
-                    autonHashMap.put(zoneId + "_Missed", missedValue);
-                    autonHashMap.put(zoneId + "_RobotFellOver", robotFellValue);
-
-                    Toast.makeText(context, "Data saved for " + zoneId, Toast.LENGTH_SHORT).show();
-                }
-
-/**
- * Set counter value for Collecting, Ferrying, or Missed radio groups
- * Stored values match button text: "-10", "-5", "-", "000", "+", "+5", "+10"
- */
-                private void setCounterValue(RadioGroup group, String value) {
-                    for (int i = 0; i < group.getChildCount(); i++) {
-                        RadioButton button = (RadioButton) group.getChildAt(i);
-                        String buttonText = button.getText().toString().trim();
-                        // Match exact button text with the stored value
-                        if (buttonText.equals(value)) {
-                            group.check(button.getId());
-                            return;
-                        }
-                    }
-                    // Default to "000" (middle button at index 3) if no match found
-                    if (group.getChildCount() > 3) {
-                        group.check(((RadioButton) group.getChildAt(3)).getId());
-                    }
-                }
-
-/**
- * Get counter value from Collecting, Ferrying, or Missed radio groups
- * Returns the text of the selected radio button (e.g., "-10", "-", "000", "+5", "+10")
- */
-                private String getCounterValue(RadioGroup group) {
-                    int selectedId = group.getCheckedRadioButtonId();
-                    if (selectedId == -1) {
-                        return "000"; // Default if none selected
-                    }
-                    RadioButton selectedButton = group.findViewById(selectedId);
-                    if (selectedButton != null) {
-                        return selectedButton.getText().toString().trim();
-                    }
-                    return "000";
-                }
-
-/**
- * Set level value for Start Level or Stop Level radio groups
- * Expected values: "Empty", "25", "50", "75", "Full" or similar button text
- */
-                private void setLevelValue(RadioGroup group, String value) {
-                    for (int i = 0; i < group.getChildCount(); i++) {
-                        RadioButton button = (RadioButton) group.getChildAt(i);
-                        String buttonText = button.getText().toString().trim();
-
-                        // Match button text - handle both exact matches and partial matches
-                        if (buttonText.equalsIgnoreCase(value)) {
-                            group.check(button.getId());
-                            return;
-                        }
-
-                        // Handle numeric percentage matches (if stored as "25" but button shows "25%")
-                        if (value.equals("25") && buttonText.contains("25")) {
-                            group.check(button.getId());
-                            return;
-                        }
-                        if (value.equals("50") && buttonText.contains("50")) {
-                            group.check(button.getId());
-                            return;
-                        }
-                        if (value.equals("75") && buttonText.contains("75")) {
-                            group.check(button.getId());
-                            return;
-                        }
-                    }
-                    // Default to first button (Empty) if no match found
-                    if (group.getChildCount() > 0) {
-                        group.check(((RadioButton) group.getChildAt(0)).getId());
-                    }
-                }
-
-                /**
-                 * Get level value from Start Level or Stop Level radio groups
-                 * Returns the button text or a normalized value: "Empty", "25", "50", "75", "Full"
-                 */
-                private String getLevelValue(RadioGroup group) {
-                    int selectedId = group.getCheckedRadioButtonId();
-                    if (selectedId == -1) {
-                        return "Empty";
-                    }
-                    RadioButton selectedButton = group.findViewById(selectedId);
-                    if (selectedButton != null) {
-                        String text = selectedButton.getText().toString().trim();
-                        // Extract numeric values or return text as-is
-                        if (text.contains("25")) return "25";
-                        if (text.contains("50")) return "50";
-                        if (text.contains("75")) return "75";
-                        if (text.toLowerCase().contains("full")) return "Full";
-                        if (text.toLowerCase().contains("empty")) return "Empty";
-                        return text; // Return button text if no pattern match
-                    }
-                    return "Empty";
-                }
-
-                /**
-                 * Update grid visuals to show which zones have been filled
-                 * TODO: Enhance this to change button colors/styling based on whether data exists
-                 */
-                                private void updateGridVisuals() {
-                                    // Placeholder for visual feedback
-                                    // Could change button colors based on whether zones have data
                 }
             }
 
-            public void onFinish() { //sets the label to display a teleop error background and text
+            public void onFinish() {
                 if(running) {
                     secondsRemaining.setText("00");
                     topEdgeBar.setBackground(getResources().getDrawable(R.drawable.teleop_error));
@@ -547,7 +263,7 @@ public class Auton extends Fragment implements UpdateListener {
                         }
                     });
 
-                    teleopButtonAnimation.setDuration(500);;
+                    teleopButtonAnimation.setDuration(500);
                     teleopButtonAnimation.setRepeatMode(ValueAnimator.REVERSE);
                     teleopButtonAnimation.setRepeatCount(ValueAnimator.INFINITE);
 
@@ -569,16 +285,15 @@ public class Auton extends Fragment implements UpdateListener {
             leftEdgeBar.setAlpha(1);
         }
 
-        //set listeners for buttons and fill the hashmap with data
-
-        leaveSwitch.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
+        // Set listeners for buttons and fill the hashmap with data
+        leaveSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 autonHashMap.put("Leave", isChecked ? "Y" : "N");
                 updateXMLObjects();
             }
         });
 
-        fellOverSwitch.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
+        fellOverSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 setupHashMap.put("FellOver", isChecked ? "Y" : "N");
                 updateXMLObjects();
@@ -591,15 +306,281 @@ public class Auton extends Fragment implements UpdateListener {
                 context.tabs.getTabAt(1).select();
             }
         });
+
+        // Setup grid listeners for clicking on zones
+        setupRedAllianceGridListeners();
+        setupBlueAllianceGridListeners();
     }
 
-    //ADD: New method - Update popup button states based on cascading logic
+    /**
+     * Setup click listeners for all red alliance grid zones (6 columns x 5 rows)
+     */
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void setupRedAllianceGridListeners() {
+        if (redAllianceGrid == null) return;
+
+        for (int row = 0; row < 5; row++) {
+            for (int col = 0; col < 6; col++) {
+                String zoneId = "red_" + row + "_" + col;
+                ImageButton button = findGridButton(redAllianceGrid, zoneId);
+                if (button != null) {
+                    button.setOnClickListener(v -> onGridZoneClicked(zoneId, "field"));
+                }
+            }
+        }
+    }
+
+    /**
+     * Setup click listeners for all blue alliance grid zones (6 columns x 5 rows)
+     */
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void setupBlueAllianceGridListeners() {
+        if (blueAllianceGrid == null) return;
+
+        for (int row = 0; row < 5; row++) {
+            for (int col = 0; col < 6; col++) {
+                String zoneId = "blue_" + row + "_" + col;
+                ImageButton button = findGridButton(blueAllianceGrid, zoneId);
+                if (button != null) {
+                    button.setOnClickListener(v -> onGridZoneClicked(zoneId, "field"));
+                }
+            }
+        }
+    }
+
+    /**
+     * Find an ImageButton in the grid by its tag
+     * Tags should be in format "red_row_col" or "blue_row_col" (e.g., "red_0_0", "blue_2_3")
+     */
+    private ImageButton findGridButton(GridLayout grid, String zoneId) {
+        for (int i = 0; i < grid.getChildCount(); i++) {
+            View child = grid.getChildAt(i);
+            if (child instanceof ImageButton) {
+                ImageButton button = (ImageButton) child;
+                // //FIX: Match button tags to zone IDs - convert tag to String for comparison
+                Object tag = button.getTag();
+                if (tag != null && zoneId.equals(tag.toString())) {
+                    return button;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Handle grid zone click - show field popup
+     */
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void onGridZoneClicked(String zoneId, String popupType) {
+        currentSelectedZone = zoneId;
+        if ("field".equals(popupType)) {
+            showFieldPopup(zoneId);
+        }
+    }
+
+    /**
+     * Show the field popup for a specific grid zone
+     */
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void showFieldPopup(String zoneId) {
+        popupDialog = new Dialog(context);
+        popupDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        popupDialog.setContentView(R.layout.popup_auton_field_screen);
+
+        // Get UI elements from popup
+        RadioGroup collectingToggle = popupDialog.findViewById(R.id.CollectingCounterToggle);
+        RadioGroup ferryingToggle = popupDialog.findViewById(R.id.FerryingCounterToggle);
+        RadioGroup startLevelToggle = popupDialog.findViewById(R.id.StartLevelToggle);
+        RadioGroup stopLevelToggle = popupDialog.findViewById(R.id.StopLevelToggle);
+        RadioGroup missedToggle = popupDialog.findViewById(R.id.MissedCounterToggle);
+        Switch robotFellOverSwitch = popupDialog.findViewById(R.id.NoShowSwitch);
+
+        Button saveButton = popupDialog.findViewById(R.id.SaveButton);
+        Button cancelButton = popupDialog.findViewById(R.id.CancelButton);
+
+        // Load existing data for this zone
+        loadFieldPopupData(zoneId, collectingToggle, ferryingToggle, startLevelToggle, stopLevelToggle, missedToggle, robotFellOverSwitch);
+
+        // Add listeners to all radio groups to update button states when selections change
+        RadioGroup.OnCheckedChangeListener stateUpdateListener = (group, checkedId) ->
+                updatePopupButtonStates(collectingToggle, ferryingToggle, startLevelToggle, stopLevelToggle, missedToggle);
+
+        startLevelToggle.setOnCheckedChangeListener(stateUpdateListener);
+        stopLevelToggle.setOnCheckedChangeListener(stateUpdateListener);
+        missedToggle.setOnCheckedChangeListener(stateUpdateListener);
+
+        // Update button states on popup open
+        updatePopupButtonStates(collectingToggle, ferryingToggle, startLevelToggle, stopLevelToggle, missedToggle);
+
+        // Save button listener
+        saveButton.setOnClickListener(v -> {
+            saveFieldPopupData(zoneId, collectingToggle, ferryingToggle, startLevelToggle, stopLevelToggle, missedToggle, robotFellOverSwitch);
+            popupDialog.dismiss();
+            updateGridVisuals();
+        });
+
+        // Cancel button listener
+        cancelButton.setOnClickListener(v -> popupDialog.dismiss());
+
+        popupDialog.show();
+    }
+
+    /**
+     * Load field popup data from HashMap for the given zone
+     */
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void loadFieldPopupData(String zoneId, RadioGroup collectingToggle, RadioGroup ferryingToggle,
+                                    RadioGroup startLevelToggle, RadioGroup stopLevelToggle,
+                                    RadioGroup missedToggle, Switch robotFellOverSwitch) {
+        String collectingValue = autonHashMap.getOrDefault(zoneId + "_Collecting", "000");
+        String ferryingValue = autonHashMap.getOrDefault(zoneId + "_Ferrying", "000");
+        String startLevelValue = autonHashMap.getOrDefault(zoneId + "_StartLevel", "Empty");
+        String stopLevelValue = autonHashMap.getOrDefault(zoneId + "_StopLevel", "Empty");
+        String missedValue = autonHashMap.getOrDefault(zoneId + "_Missed", "000");
+        String robotFellValue = autonHashMap.getOrDefault(zoneId + "_RobotFellOver", "N");
+
+        // Set radio button selections based on values
+        setCounterValue(collectingToggle, collectingValue);
+        setCounterValue(ferryingToggle, ferryingValue);
+        setLevelValue(startLevelToggle, startLevelValue);
+        setLevelValue(stopLevelToggle, stopLevelValue);
+        setCounterValue(missedToggle, missedValue);
+        robotFellOverSwitch.setChecked("Y".equals(robotFellValue));
+    }
+
+    /**
+     * Save field popup data to HashMap for the given zone
+     */
+    private void saveFieldPopupData(String zoneId, RadioGroup collectingToggle, RadioGroup ferryingToggle,
+                                    RadioGroup startLevelToggle, RadioGroup stopLevelToggle,
+                                    RadioGroup missedToggle, Switch robotFellOverSwitch) {
+        // Get selected values from radio groups
+        String collectingValue = getCounterValue(collectingToggle);
+        String ferryingValue = getCounterValue(ferryingToggle);
+        String startLevelValue = getLevelValue(startLevelToggle);
+        String stopLevelValue = getLevelValue(stopLevelToggle);
+        String missedValue = getCounterValue(missedToggle);
+        String robotFellValue = robotFellOverSwitch.isChecked() ? "Y" : "N";
+
+        // Store in HashMap
+        autonHashMap.put(zoneId + "_Collecting", collectingValue);
+        autonHashMap.put(zoneId + "_Ferrying", ferryingValue);
+        autonHashMap.put(zoneId + "_StartLevel", startLevelValue);
+        autonHashMap.put(zoneId + "_StopLevel", stopLevelValue);
+        autonHashMap.put(zoneId + "_Missed", missedValue);
+        autonHashMap.put(zoneId + "_RobotFellOver", robotFellValue);
+
+        Toast.makeText(context, "Data saved for " + zoneId, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Set counter value for Collecting, Ferrying, or Missed radio groups
+     * Stored values match button text: "-10", "-5", "-", "000", "+", "+5", "+10"
+     */
+    private void setCounterValue(RadioGroup group, String value) {
+        for (int i = 0; i < group.getChildCount(); i++) {
+            RadioButton button = (RadioButton) group.getChildAt(i);
+            String buttonText = button.getText().toString().trim();
+            // Match exact button text with the stored value
+            if (buttonText.equals(value)) {
+                group.check(button.getId());
+                return;
+            }
+        }
+        // Default to "000" (middle button at index 3) if no match found
+        if (group.getChildCount() > 3) {
+            group.check(((RadioButton) group.getChildAt(3)).getId());
+        }
+    }
+
+    /**
+     * Get counter value from Collecting, Ferrying, or Missed radio groups
+     * Returns the text of the selected radio button (e.g., "-10", "-", "000", "+5", "+10")
+     */
+    private String getCounterValue(RadioGroup group) {
+        int selectedId = group.getCheckedRadioButtonId();
+        if (selectedId == -1) {
+            return "000"; // Default if none selected
+        }
+        RadioButton selectedButton = group.findViewById(selectedId);
+        if (selectedButton != null) {
+            return selectedButton.getText().toString().trim();
+        }
+        return "000";
+    }
+
+    /**
+     * Set level value for Start Level or Stop Level radio groups
+     * Expected values: "Empty", "25", "50", "75", "Full" or similar button text
+     */
+    private void setLevelValue(RadioGroup group, String value) {
+        for (int i = 0; i < group.getChildCount(); i++) {
+            RadioButton button = (RadioButton) group.getChildAt(i);
+            String buttonText = button.getText().toString().trim();
+
+            // Match button text - handle both exact matches and partial matches
+            if (buttonText.equalsIgnoreCase(value)) {
+                group.check(button.getId());
+                return;
+            }
+
+            // Handle numeric percentage matches (if stored as "25" but button shows "25%")
+            if (value.equals("25") && buttonText.contains("25")) {
+                group.check(button.getId());
+                return;
+            }
+            if (value.equals("50") && buttonText.contains("50")) {
+                group.check(button.getId());
+                return;
+            }
+            if (value.equals("75") && buttonText.contains("75")) {
+                group.check(button.getId());
+                return;
+            }
+        }
+        // Default to first button (Empty) if no match found
+        if (group.getChildCount() > 0) {
+            group.check(((RadioButton) group.getChildAt(0)).getId());
+        }
+    }
+
+    /**
+     * Get level value from Start Level or Stop Level radio groups
+     * Returns the button text or a normalized value: "Empty", "25", "50", "75", "Full"
+     */
+    private String getLevelValue(RadioGroup group) {
+        int selectedId = group.getCheckedRadioButtonId();
+        if (selectedId == -1) {
+            return "Empty";
+        }
+        RadioButton selectedButton = group.findViewById(selectedId);
+        if (selectedButton != null) {
+            String text = selectedButton.getText().toString().trim();
+            // Extract numeric values or return text as-is
+            if (text.contains("25")) return "25";
+            if (text.contains("50")) return "50";
+            if (text.contains("75")) return "75";
+            if (text.toLowerCase().contains("full")) return "Full";
+            if (text.toLowerCase().contains("empty")) return "Empty";
+            return text; // Return button text if no pattern match
+        }
+        return "Empty";
+    }
+
+    /**
+     * Update grid visuals to show which zones have been filled
+     * TODO: Enhance this to change button colors/styling based on whether data exists
+     */
+    private void updateGridVisuals() {
+        // Placeholder for visual feedback
+        // Could change button colors based on whether zones have data
+    }
+
     /**
      * Update all button states in popup based on cascading sequential logic:
      * - Level 1: Collecting & Ferrying always enabled
      * - Level 2: START & STOP always enabled
      * - Level 3: MISSED enabled only if both START and STOP are selected
-     * - Level 4: CLIMBING disabled if this is for scoring popup
      */
     private void updatePopupButtonStates(RadioGroup collectingToggle, RadioGroup ferryingToggle,
                                          RadioGroup startLevelToggle, RadioGroup stopLevelToggle,
@@ -621,7 +602,18 @@ public class Auton extends Fragment implements UpdateListener {
         setRadioGroupEnabled(missedToggle, bothScoringLevelsSelected);
     }
 
+    /**
+     * Helper method - Enable or disable all buttons in a RadioGroup
+     */
+    private void setRadioGroupEnabled(RadioGroup group, boolean enabled) {
+        for (int i = 0; i < group.getChildCount(); i++) {
+            group.getChildAt(i).setEnabled(enabled);
+        }
+    }
 
+    /**
+     * Update XML objects with data from HashMaps
+     */
     public void updateXMLObjects(){
         setupHashMap = HashMapManager.getSetupHashMap();
         autonHashMap = HashMapManager.getAutonHashMap();
@@ -630,50 +622,38 @@ public class Auton extends Fragment implements UpdateListener {
             return;
         }
 
-        // Update Leave and Fell Over switches based on saved data
+        // Update Leave switch based on saved data
         if(autonHashMap.containsKey("Leave")) {
-            leaveSwitch.setChecked(autonHashMap.get("Leave").equals("true"));
+            leaveSwitch.setChecked(autonHashMap.get("Leave").equals("Y"));
         }
-        if(autonHashMap.containsKey("FellOver")) {
-            fellOverSwitch.setChecked(autonHashMap.get("FellOver").equals("true"));
+
+        // Update FellOver switch based on saved data and update button state
+        if(setupHashMap.containsKey("FellOver")) {
+            if(setupHashMap.get("FellOver").equals("Y")) {
+                fellOverSwitch.setChecked(true);
+                nextButton.setPadding(150, 0, 150, 0);
+                nextButton.setText(R.string.GenerateQRCode);
+                miscButtonsEnabledState(false);
+            } else {
+                fellOverSwitch.setChecked(false);
+                nextButton.setPadding(150, 0, 185, 0);
+                nextButton.setText(R.string.TeleopNext);
+                miscButtonsEnabledState(true);
+            }
         }
 
         // Call grid visual update to show saved data
         updateGridVisuals();
     }
 
-    //Helper method - Enable or disable all buttons in a RadioGroup
     /**
-     * Enable or disable all radio buttons in a group
+     * Enable or disable misc buttons based on robot state
      */
-    private void setRadioGroupEnabled(RadioGroup group, boolean enabled) {
-        for (int i = 0; i < group.getChildCount(); i++) {
-            group.getChildAt(i).setEnabled(enabled);
-        }
-    }
-
-private void miscButtonsEnabledState(boolean enable){
+    private void miscButtonsEnabledState(boolean enable){
         miscInstructionsID.setEnabled(enable);
         leaveSwitch.setEnabled(enable);
         leaveID.setEnabled(enable);
         nextButton.setEnabled(enable);
-
-    public void updateXMLObjects(){
-
-        leaveSwitch.setChecked(autonHashMap.get("Leave").equals("Y"));
-
-        if(setupHashMap.get("FellOver").equals("Y")) {
-            fellOverSwitch.setChecked(true);
-            nextButton.setPadding(150, 0, 150, 0);
-            nextButton.setText(R.string.GenerateQRCode);
-            allButtonsEnabledState(false);
-        } else {
-            fellOverSwitch.setChecked(false);
-            nextButton.setPadding(150, 0, 185, 0);
-            nextButton.setText(R.string.TeleopNext);
-            allButtonsEnabledState(true);
-            // Disables decrement buttons if counter is at 0
-        }
     }
 
     @Override

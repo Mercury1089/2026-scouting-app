@@ -7,6 +7,16 @@
     android:layout_height="match_parent"
     android:background="@color/charcoal">
 
+    <TextView
+        android:id="@+id/IDPossessionDirections"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Possession Information"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NextTeleopButton" />
+
     <!-- FIELD BACKGROUND IMAGE -->
     <ImageView
         android:id="@+id/fieldBackgroundImage"
